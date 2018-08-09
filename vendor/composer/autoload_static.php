@@ -13,7 +13,6 @@ class ComposerStaticInit8fe9fd68d88dbb20e1852d05b4661048
         ),
         'M' => 
         array (
-            'Medoo\\' => 6,
             'MailtoPay\\' => 10,
         ),
     );
@@ -22,10 +21,6 @@ class ComposerStaticInit8fe9fd68d88dbb20e1852d05b4661048
         'pdeans\\Builders\\' => 
         array (
             0 => __DIR__ . '/..' . '/pdeans/xml-builder/src',
-        ),
-        'Medoo\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/catfan/medoo/src',
         ),
         'MailtoPay\\' => 
         array (

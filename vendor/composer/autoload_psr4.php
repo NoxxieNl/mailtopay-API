@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'pdeans\\Builders\\' => array($vendorDir . '/pdeans/xml-builder/src'),
-    'Medoo\\' => array($vendorDir . '/catfan/medoo/src'),
     'MailtoPay\\' => array($baseDir . '/src/MailToPay'),
 );
