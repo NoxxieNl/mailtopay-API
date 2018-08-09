@@ -20,11 +20,6 @@ class MailtoPay
     static $username = null;
     static $password = null;
 
-    public function __construct()
-    {
-
-    }
-
     public function authCheck($username = null, $password = null)
     {
         if ($username == null || $password == null) {
@@ -172,6 +167,51 @@ class MailtoPay
         }
 
         $response = endpoints\Messages::put($id, $status, $batch_id, $debtornumber, $payment_reference);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCollectionOrders($id = null, $rpp = null, $page = null, $started_start = null, $started_end = null, $status_start = null, $status_end = null)
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\CollectionOrders::get($id, $rpp, $page, $started_start, $started_end, $status_start, $status_end);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
+    public function postCollectionOrders($array = array())
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\CollectionOrders::post($array);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
+    public function putCollectionOrders($id, $array = array())
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\CollectionOrders::put($id, $array);
 
         if ($response) {
             return $response;

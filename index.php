@@ -94,8 +94,11 @@ try {
         $messageResponseObject = $MailtoPay->postMessages($array);
         print_r($messageResponseObject->result); */
 
-        $messageResponseObject = $MailtoPay->putMessages(1057331292, 'paid');
-        print_r($messageResponseObject->result);
+        //$messageResponseObject = $MailtoPay->putMessages(1057331292, 'paid');
+        //print_r($messageResponseObject->result);
+
+        $collectionOrdersObject = $MailtoPay->getCollectionOrders(1007278558);
+        print_r($collectionOrdersObject->result);
     } else {
         echo 'Nope, wrong credentials!';
     }
