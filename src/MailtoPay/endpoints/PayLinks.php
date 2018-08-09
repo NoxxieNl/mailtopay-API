@@ -81,10 +81,7 @@ class PayLinks extends MailtoPay {
         Unirest\Request::auth(parent::$username, parent::$password);
         Unirest\Request::verifyPeer(false); 
 
-        // Replace base array with values
         $xmlArray = parent::setBasePostArray($array);
-
-        // Create XML
         $xmlBuilder = new XmlBuilder();
         $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
 

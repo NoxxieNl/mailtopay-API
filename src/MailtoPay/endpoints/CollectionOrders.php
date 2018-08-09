@@ -1,5 +1,4 @@
 <?php
-
 namespace MailtoPay\Endpoints;
 
 use MailtoPay\MailtoPay;

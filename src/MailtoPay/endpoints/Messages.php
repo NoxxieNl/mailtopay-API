@@ -1,5 +1,4 @@
 <?php
-
 namespace MailtoPay\Endpoints;
 
 use MailtoPay\MailtoPay;
@@ -48,7 +47,7 @@ class Messages extends MailtoPay {
         'module_paysafecard' => 0,
         'module_banktransfer' => 0,
         'module_emandate' => 0,
-        'module_ideal' => 0,
+        'module_ideal' => 1,
         'variable5' => '',
         'variable5' => '',
         'variable5' => '',
@@ -66,12 +65,12 @@ class Messages extends MailtoPay {
         ],
         'terms' => [
             'term' => [
-                'term_amount' => '20000',
-                'email_datetime' => '2018-12-10T15:00:00',
+                'term_amount' => 0,
+                'email_datetime' => '',
                 'sms_datetime' => '',
                 'letter_datetime' => '',
-                'reminder_datetime' => '2018-12-15T15:00:00',
-                'due_date' => '2018-12-31'
+                'reminder_datetime' => '',
+                'due_date' => ''
             ]
         ]
     ];

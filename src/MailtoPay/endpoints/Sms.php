@@ -23,17 +23,13 @@ class Sms extends MailtoPay {
         Unirest\Request::auth(parent::$username, parent::$password);
         Unirest\Request::verifyPeer(false); 
 
-        // Create array
         $array = [
             'mobilenumber' => $number,
             'sms_message' => $message,
             'sms_datetime' => (is_null($date) || is_null($time) ? date('Y-m-d\TH:i:s') : $date . 'T' . $time)
         ];
 
-        // Replace base array with values
         $xmlArray = parent::setBasePostArray($array);
-
-        // Create XML
         $xmlBuilder = new XmlBuilder();
         $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
 
