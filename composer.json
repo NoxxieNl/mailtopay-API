@@ -1,14 +1,21 @@
 {
     "name": "Bosveld/MailToPay",
-	"type": "package",
-	"description": "mailtopay API interface",
-	"license": "MIT",
+	"type": "library",
+    "description": "An PHP MailtoPay API interface",
+    "keywords": ["API", "MailtoPay", "2.0"],
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "Patrick Rennings",
+            "email": "prennings@bosveld.nl",
+            "homepage": "https://bosveld.nl/",
+            "role": "Developer"
+        }
+    ],
     "require": {
-        "catfan/medoo": "^1.5",
         "pdeans/xml-builder": "^1.0",
         "mashape/unirest-php": "^3.0"
     },
-
     "autoload": {
         "psr-4": { "MailtoPay\\" : "src/MailToPay" }
     }
