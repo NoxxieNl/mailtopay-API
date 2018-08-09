@@ -315,9 +315,9 @@ class Request
      * @param string $password Basic Authentication password (deprecated)
      * @return Response
      */
-    public static function put($url, $headers = array(), $body = null, $username = null, $password = null)
+    public static function put($url, $headers = array(), $body = null, $username = null, $password = null, $parameters = null)
     {
-        return self::send(Method::PUT, $url, $body, $headers, $username, $password);
+        return self::send(Method::PUT, $url, $body, $headers, $username, $password, $parameters);
     }
 
     /**
@@ -391,7 +391,7 @@ class Request
      * @throws \Unirest\Exception if a cURL error occurs
      * @return Response
      */
-    public static function send($method, $url, $body = null, $headers = array(), $username = null, $password = null)
+    public static function send($method, $url, $body = null, $headers = array(), $username = null, $password = null, $parameter = null)
     {
         self::$handle = curl_init();
 
@@ -411,6 +411,18 @@ class Request
             }
 
             $url .= urldecode(http_build_query(self::buildHTTPCurlQuery($body)));
+        }
+
+        if (!is_null($parameter)) {
+            if (is_array($parameter)) {
+                if (strpos($url, '?') !== false) {
+                    $url .= '&';
+                } else {
+                    $url .= '?';
+                }
+
+                $url .= urldecode(http_build_query(self::buildHTTPCurlQuery($parameter)));                
+            }  
         }
 
         $curl_base_options = [
@@ -471,7 +483,7 @@ class Request
         $response   = curl_exec(self::$handle);
         $error      = curl_error(self::$handle);
         $info       = self::getInfo();
-
+        
         if ($error) {
             throw new Exception($error);
         }

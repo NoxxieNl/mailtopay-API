@@ -135,6 +135,51 @@ class MailtoPay
         }
     }
 
+    public function getMessages($id = null, $date = null, $status = null, $batch_id = null, $debtornumber = null, $payment_reference = null, $rpp = null, $page = null)
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\Messages::get($id, $date, $status, $batch_id, $debtornumber, $payment_reference, $rpp, $page);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
+    public function postMessages($array = array())
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\Messages::post($array);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
+    public function putMessages($id = null, $status, $batch_id = null, $debtornumber = null, $payment_reference = null)
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\Messages::put($id, $status, $batch_id, $debtornumber, $payment_reference);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
     protected function setBasePostArray($array = array(), $baseArray = null, $firstLoop = true, $multiItems = false)
     {
         if (is_null($baseArray)) {
