@@ -61,7 +61,7 @@ try {
 
         //13369
 
-        /*$array = [
+        $array = [
             'firstname' => 'Patrick',
             'lastname' => 'Rennings',
             'debtornumber' => '123456789',
@@ -87,18 +87,28 @@ try {
                     ]
                 ]
             ],
+            'terms' => [
+                'term' => [
+                    'term_amount' => 20000,
+                    'email_datetime' => '2018-08-09T15:40:00',
+                    'sms_datetime' => '',
+                    'letter_datetime' => '',
+                    'reminder_datetime' => '2018-12-15T15:00:00',
+                    'due_date' => '2018-12-31'
+                ]
+            ],
             'email_template' => '13369',
             'reminder_template' => '13369'
         ]; 
         
         $messageResponseObject = $MailtoPay->postMessages($array);
-        print_r($messageResponseObject->result); */
+        print_r($messageResponseObject->result);
 
         //$messageResponseObject = $MailtoPay->putMessages(1057331292, 'paid');
         //print_r($messageResponseObject->result);
 
-        $collectionOrdersObject = $MailtoPay->getCollectionOrders(1007278558);
-        print_r($collectionOrdersObject->result);
+        //$collectionOrdersObject = $MailtoPay->getCollectionOrders(1007278558);
+        //print_r($collectionOrdersObject->result); 
     } else {
         echo 'Nope, wrong credentials!';
     }
