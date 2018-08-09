@@ -1,8 +1,7 @@
 {
-    "name": "Bosveld/MailToPay",
+    "name": "bosveld/Mailtopay",
 	"type": "library",
     "description": "An PHP MailtoPay API interface",
-    "keywords": ["API", "MailtoPay", "2.0"],
     "license": "Proprietary",
     "authors": [
         {
