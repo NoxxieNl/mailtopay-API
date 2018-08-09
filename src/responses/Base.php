@@ -1,6 +1,5 @@
 <?php
-
-namespace MailtoPay\Responses;
+namespace bosveld\mailtopay\Responses;
 
 class Base {
 

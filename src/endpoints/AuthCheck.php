@@ -1,9 +1,8 @@
 <?php
+namespace bosveld\mailtopay\endpoints;
 
-namespace Mailtopay\Endpoints;
-
-use Mailtopay\Mailtopay;
-use Mailtopay\Responses;
+use bosveld\mailtopay\Mailtopay;
+use bosveld\mailtopay\Responses;
 
 use Unirest;
 

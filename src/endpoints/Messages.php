@@ -1,88 +1,45 @@
 <?php
-namespace MailtoPay\Endpoints;
+namespace bosveld\mailtopay\endpoints;
 
-use MailtoPay\MailtoPay;
-use MailtoPay\Responses;
+use bosveld\mailtopay\Mailtopay;
+use bosveld\mailtopay\Responses;
 
 use Unirest;
 use pdeans\Builders\XmlBuilder;
 
-class CollectionOrders extends MailtoPay {
+class Messages extends MailtoPay {
 
-    CONST ENDPOINT_URL = '/collectionorders';
+    CONST ENDPOINT_URL = '/messages';
 
     CONST PUT_BASE_ARRAY = [
-        'new_status' => '',
-        'new_firstname' => '',
-        'new_lastname' => '',
-        'new_emailaddress1' => '',
-        'new_emailaddress2' => '',
-        'new_telephone1' => '',
-        'new_telephone2' => '',
-        'new_address_street' => '',
-        'new_address_number' => '',
-        'new_address_postcode' => '',
-        'new_address_city' => '',
-        'new_address_country' => '',
-        'new_variable1' => '',
-        'new_variable2' => '',
-        'new_variable3' => '',
-        'new_variable4' => '',
-        'new_variable5' => '',
-        'new_invoice' => [
-            'invoice' => [
-                'invoice_number' => '',
-                'invoice_description' => '',
-                'invoice_amount' => '',
-                'invoice_date' => '',
-                'invoice_date_due' => ''
-            ]
-        ],
-        'update_invoice' => [
-            'invoice' => [
-                'invoice_number' => '',
-                'invoice_description' => '',
-                'invoice_amount' => '',
-                'invoice_date' => '',
-                'invoice_date_due' => ''
-            ]
-        ]
+        'new_status' => ''
     ];
 
     CONST POST_BASE_ARRAY = [
         'firstname' => '',
         'lastname' => '',
-        'emailaddress1' => '',
-        'emailaddress2' => '',
-        'telephone1' => '',
-        'telephone2' => '',
+        'emailaddress' => '',
+        'mobilenumber' => '',
         'address_street' => '',
         'address_number' => '',
         'address_postcode' => '',
         'address_city' => '',
-        'address_country' => '',
-        'address_street2' => '',
-        'address_number2' => '',
-        'address_postcode2' => '',
-        'address_city2' => '',
-        'address_country2' => '',
         'debtornumber' => '',
         'payment_reference' => '',
         'concerning' => '',
         'id_batch' => '',
         'id_request_client' => '',
         'company_name' => '',
-        'birth_date' => '',
-        'gender' => '',
-        'language' => '',
+        'email_template' => '',
+        'sms_template' => '',
+        'letter_template' => '',
+        'reminder_template' => '',
         'variable1' => '',
         'variable2' => '',
         'variable3' => '',
         'variable4' => '',
         'variable5' => '',
-        'flow_datetime' => '',
-        'flow_id' => '',
-        'flow_step' => '',
+        'username' => '',
         'module_paypal' => 0,
         'module_creditcard' => 0,
         'module_mistercash' => 0,
@@ -90,7 +47,11 @@ class CollectionOrders extends MailtoPay {
         'module_paysafecard' => 0,
         'module_banktransfer' => 0,
         'module_emandate' => 0,
-        'module_ideal' => 0,
+        'module_ideal' => 1,
+        'variable5' => '',
+        'variable5' => '',
+        'variable5' => '',
+        'variable5' => '',
         'invoices' => [
             'invoice' => [
                 [
@@ -101,23 +62,37 @@ class CollectionOrders extends MailtoPay {
                     'invoice_date_due' => ''
                 ]
             ],
+        ],
+        'terms' => [
+            'term' => [
+                'term_amount' => 0,
+                'email_datetime' => '',
+                'sms_datetime' => '',
+                'letter_datetime' => '',
+                'reminder_datetime' => '',
+                'due_date' => ''
+            ]
         ]
     ];
 
-    public static function get($id = null, $rpp = null, $page = null, $started_start = null, $started_end = null, $status_start = null, $status_end = null)
+    public static function get($id = null, $date = null, $status = null, $batch_id = null, $debtornumber = null, $payment_reference = null, $rpp = null, $page = null)
     {
         Unirest\Request::auth(parent::$username, parent::$password);
         Unirest\ Request::verifyPeer(false); 
 
         $query = [
-            'cid' => (is_null($id) ? '' : $id),
+            'mpid' => (is_null($id) ? '' : $id),
+            'status_date' => (is_null($date) ? '' : $date),
+            'id_batch' => (is_null($batch_id) ? '' : $batch_id),
+            'debtornumber' => (is_null($debtornumber) ? '' : $debtornumber),
+            'payment_reference' => (is_null($payment_reference) ? '' : $payment_reference),
             'rpp' => (is_null($rpp) ? '' : $rpp),
-            'page' => (is_null($page) ? '' : $page),
-            'started_datetime_start' => (is_null($started_start) ? '' : $started_start),
-            'started_datetime_end' => (is_null($started_end) ? '' : $started_end),
-            'status_datetime_start' => (is_null($status_start) ? '' : $status_start),
-            'status_datetime_end' => (is_null($status_end) ? '' : $status_end),
+            'page' => (is_null($page) ? '' : $page)
         ];
+
+        if (!is_null($status)) {
+            $query['status[]'] = $status;
+        }
 
         $response = Unirest\Request::get(parent::BASE_URL . self::ENDPOINT_URL, [], $query);
         
@@ -136,7 +111,10 @@ class CollectionOrders extends MailtoPay {
         Unirest\Request::auth(parent::$username, parent::$password);
         Unirest\Request::verifyPeer(false); 
 
+        // Replace base array with values
         $xmlArray = parent::setBasePostArray($array);
+
+        // Create XML
         $xmlBuilder = new XmlBuilder();
         $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
 
@@ -152,16 +130,27 @@ class CollectionOrders extends MailtoPay {
         }
     }
 
-    public function put($id, $array = array())
+    public function put($id = null, $status, $batch_id = null, $debtornumber = null, $payment_reference = null)
     {
         Unirest\Request::auth(parent::$username, parent::$password);
         Unirest\Request::verifyPeer(false); 
 
+        // Create array
         $query = [
-            'cid' => $id
+            'mpid' => (is_null($id) ? '' : $id),
+            'id_batch' => (is_null($batch_id) ? '' : $batch_id),
+            'debtornumber' => (is_null($debtornumber) ? '' : $debtornumber),
+            'payment_reference' => (is_null($payment_reference) ? '' : $payment_reference),
         ];
-        
-        $xmlArray = parent::setBasePostArray($array);
+
+        $array = [ 
+            'new_status' => $status
+        ];
+
+        // Replace base array with values
+        $xmlArray = parent::setBasePostArray($array, self::PUT_BASE_ARRAY);
+
+        // Create XML
         $xmlBuilder = new XmlBuilder();
         $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
 

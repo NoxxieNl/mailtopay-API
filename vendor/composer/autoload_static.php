@@ -11,9 +11,9 @@ class ComposerStaticInit8fe9fd68d88dbb20e1852d05b4661048
         array (
             'pdeans\\Builders\\' => 16,
         ),
-        'M' => 
+        'b' => 
         array (
-            'MailtoPay\\' => 10,
+            'bosveld\\mailtopay\\' => 18,
         ),
     );
 
@@ -22,9 +22,9 @@ class ComposerStaticInit8fe9fd68d88dbb20e1852d05b4661048
         array (
             0 => __DIR__ . '/..' . '/pdeans/xml-builder/src',
         ),
-        'MailtoPay\\' => 
+        'bosveld\\mailtopay\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/MailToPay',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
