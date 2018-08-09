@@ -53,6 +53,8 @@ try {
         //$smsResponseObject = $MailtoPay->postSms('0648605628', 'Ik ben aan het testen!', '2018-08-09', '12:20:00');
         //print_r($smsResponseObject->result);
 
+        $flowResponseObject = $MailtoPay->getFlow(822);
+        print_r($flowResponseObject->result);
     } else {
         echo 'Nope, wrong credentials!';
     }

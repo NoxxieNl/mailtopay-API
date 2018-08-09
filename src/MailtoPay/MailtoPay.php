@@ -120,6 +120,21 @@ class MailtoPay
         }
     }
 
+    public function getFlow($id)
+    {
+        if (self::$username == null || self::$password == null) {
+            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        }
+
+        $response = endpoints\Flow::get($id);
+
+        if ($response) {
+            return $response;
+        } else {
+            return false;
+        }
+    }
+
     protected function setBasePostArray($array = array(), $baseArray = null, $firstLoop = true, $multiItems = false)
     {
         if (is_null($baseArray)) {
