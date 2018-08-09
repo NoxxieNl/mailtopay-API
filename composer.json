@@ -1,6 +1,6 @@
 {
-    "name": "mailtopay",
-	"type": "interface",
+    "name": "Bosveld/MailToPay",
+	"type": "package",
 	"description": "mailtopay API interface",
 	"license": "MIT",
     "require": {

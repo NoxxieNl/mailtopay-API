@@ -1,0 +1,5 @@
+# Remove the test page from any git commits
+index.php
+
+# uncomment below when packages goes to production
+#/vendor
