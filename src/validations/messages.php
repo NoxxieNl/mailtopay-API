@@ -5,6 +5,8 @@ class messages extends base {
 
     CONST ALLOWED_STATUS = [101, 300, 500, 700, 701, 702, 703, 704, 900, 998, 999];
 
+    CONST ALLOWED_STATUS_PUT = ['paid', 'cancel'];
+
     CONST POST_BASE_ARRAY = [
         'firstname' => self::REQUIRED,
         'lastname' => self::REQUIRED,
@@ -286,6 +288,43 @@ class messages extends base {
             return false;
         }
 
+
+        return true;
+    }
+
+    public function put($id = null, $status, $batch_id = null, $debtornumber = null, $payment_reference = null)
+    {
+        if (!is_null($id)) {
+            if (!is_int($id)) {
+                $this->setError('parameter id is not an integer');
+                return false;
+            }
+        }
+
+        if (!is_null($status)) {
+            if (!in_array($status, self::ALLOWED_STATUS_PUT)) {
+                $this->setError('parameter status has an invalid values, allowed values are ' . implode(', ', self::ALLOWED_STATUS_PUT));
+                return false;
+            }
+        }
+        
+        if (!is_null($batch_id)) {
+            if (strlen($batch_id) > 50) {
+                $this->setError('parameter batch_id has in invalid value, must be between 0 and 50 characters');
+            }
+        }
+
+        if (!is_null($debtornumber)) {
+            if (strlen($debtornumber) < 3 || strlen($debtornumber) > 35) {
+                $this->setError('parameter debtornumber has in invalid value, must be between 3 and 35 characters');
+            }
+        }
+
+        if (!is_null($payment_reference)) {
+            if (strlen($payment_reference) > 35) {
+                $this->setError('parameter payment_reference has in invalid value, must be between 1 and 35 characters');
+            }
+        }
 
         return true;
     }
