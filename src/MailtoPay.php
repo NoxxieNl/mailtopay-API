@@ -18,17 +18,25 @@ class MailtoPay
     static $username = null;
     static $password = null;
 
-    public function authCheck($username = null, $password = null)
+    public function __construct($username = null, $password = null)
     {
+        // Check if username and password are specified, if not check if there already set
         if ($username == null || $password == null) {
             if (self::$username == null || self::$password == null) {
                 throw new \Exception('Username and password must be specificied for ' . __METHOD__);
-            } else {
-                $username = self::$username;
-                $password = self::$password;
             }
+        } else {
+            self::$username = $username;
+            self::$password = $password;
         }
-        $authCheck = endpoints\authCheck::get($username, $password);
+
+        return;
+    }
+
+    public function authCheck()
+    {
+        // Execute request
+        $authCheck = endpoints\authCheck::get(self::$username, self::$password);
         if ($authCheck == true) {
             return true;
         } else {
@@ -38,12 +46,14 @@ class MailtoPay
 
     public function getTemplates($type = null, $rpp = null, $page = null)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\templates();
+        if ($validate->get($type, $rpp, $page) === false) {
+            throw new \Exception($validate->getError());
         }
 
-        $response = endpoints\Templates::get($type, $rpp, $page);
-        
+        // Execute request
+        $response = endpoints\Templates::get($type, $rpp, $page);        
         if ($response) {
             return $response;
         } else {
@@ -53,12 +63,14 @@ class MailtoPay
 
     public function getPayLinks($id = null, $date = null, $status = null, $batch_id = null, $rpp = null, $page = null)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\paylinks();
+        if ($validate->get($id, $date, $status, $batch_id, $rpp, $page) === false) {
+            throw new \Exception($validate->getError());
         }
 
+        // Execute request
         $response = endpoints\PayLinks::get($id, $date, $status, $batch_id, $rpp, $page);
-        
         if ($response) {
             return $response;
         } else {
@@ -66,14 +78,16 @@ class MailtoPay
         }
     }
 
-    public function postPayLinks($array = array())
+    public function postPayLinks($array)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\paylinks();
+        if ($validate->post($array) === false) {
+            throw new \Exception($validate->getError());
         }
 
+        // Execute request
         $response = endpoints\PayLinks::post($array);
-
         if ($response) {
             return $response;
         } else {

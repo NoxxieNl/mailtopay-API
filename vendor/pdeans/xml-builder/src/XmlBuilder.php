@@ -68,6 +68,7 @@ class XmlBuilder extends XMLWriter
 		}
 
 		$this->endElement();
+
 		return $this->outputMemory();
 	}
 
