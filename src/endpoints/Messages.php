@@ -65,12 +65,14 @@ class Messages extends MailtoPay {
         ],
         'terms' => [
             'term' => [
-                'term_amount' => 0,
-                'email_datetime' => '',
-                'sms_datetime' => '',
-                'letter_datetime' => '',
-                'reminder_datetime' => '',
-                'due_date' => ''
+                [
+                    'term_amount' => 0,
+                    'email_datetime' => '',
+                    'sms_datetime' => '',
+                    'letter_datetime' => '',
+                    'reminder_datetime' => '',
+                    'due_date' => ''
+                ]
             ]
         ]
     ];
@@ -119,7 +121,7 @@ class Messages extends MailtoPay {
         $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
 
         $response = Unirest\Request::post(parent::BASE_URL . self::ENDPOINT_URL, [], $xml);
-
+        
         if ($response->code == parent::HTTP_CREATED) {
             $responseObject = new Responses\DefaultResponse();
             $responseObject->get($response->body, true);

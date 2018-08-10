@@ -5,7 +5,7 @@ class messages extends base {
 
     CONST ALLOWED_STATUS = [101, 300, 500, 700, 701, 702, 703, 704, 900, 998, 999];
 
-    CONST ALLOWED_STATUS_PUT = ['paid', 'cancel'];
+    CONST ALLOWED_STATUS_PUT = ['paid', 'withdrawn', 'expired'];
 
     CONST POST_BASE_ARRAY = [
         'firstname' => self::REQUIRED,
@@ -26,11 +26,11 @@ class messages extends base {
         'sms_template' => self::OPTIONAL,
         'letter_template' => self::OPTIONAL,
         'reminder_template' => self::OPTIONAL,
-        'variable1' => self::OPTIONIAL,
-        'variable2' => self::OPTIONIAL,
-        'variable3' => self::OPTIONIAL,
-        'variable4' => self::OPTIONIAL,
-        'variable5' => self::OPTIONIAL,
+        'variable1' => self::OPTIONAL,
+        'variable2' => self::OPTIONAL,
+        'variable3' => self::OPTIONAL,
+        'variable4' => self::OPTIONAL,
+        'variable5' => self::OPTIONAL,
         'username' => self::OPTIONAL,
         'module_ideal' => self::OPTIONAL,
         'module_mistercash' => self::OPTIONAL,        
@@ -64,7 +64,7 @@ class messages extends base {
                 ]
             ],
         ],
-        'due_date' => self::REQUIRED
+        //'due_date' => self::REQUIRED
     ];
 
     public function get($id = null, $date = null, $status = null, $batch_id = null, $debtornumber = null, $payment_reference = null, $rpp = null, $page = null)
@@ -162,7 +162,7 @@ class messages extends base {
                 else {
                     foreach ($array[$key][$subKey] as $arrayKey => $arrayValue)
                     {
-                        foreach(self::POST_BASE_ARRAY['invoices']['invoice'][0] as $invoiceKey => $invoiceValue) {
+                        foreach(self::POST_BASE_ARRAY[$key][$subKey][0] as $invoiceKey => $invoiceValue) {
                             if (!isset($arrayValue[$invoiceKey]) && $invoiceValue == self::REQUIRED) {
                                 $this->setError('array item ' . $invoiceKey . ' is missing from in ' . $subKey . ' array in parameter array');
                                 return false;
@@ -184,7 +184,7 @@ class messages extends base {
                                     return false;
                                 }
 
-                                elseif ((invoiceKey == 'invoice_date' || $invoiceKey == 'invoice_date_due') && !\DateTime::createFromFormat('Y-m-d', ($arrayValue[$invoiceKey]))) {
+                                elseif (($invoiceKey == 'invoice_date' || $invoiceKey == 'invoice_date_due') && !\DateTime::createFromFormat('Y-m-d', ($arrayValue[$invoiceKey]))) {
                                     $this->setError('array item ' . $invoiceKey . ' in invoice array has an invalid date');
                                     return false;
                                 }
@@ -210,60 +210,66 @@ class messages extends base {
         foreach ($array['terms']['term'] as $id => $term)
         {
             // Check required fields business logic
-            if (!is_null($term['email_datetime'])) {
-                if (is_null($array['emailaddress']) || is_null($array['email_template'])) {
+            if (!empty($term['email_datetime'])) {
+                if (empty($array['emailaddress']) || empty($array['email_template'])) {
                     $this->seterror('email_datetime was specified in term therefore emailaddress & email_template are required');
                     return false;
                 }
 
-                $date = strtotime($term['email_datetime']);
+                if (strtotime($term['email_datetime']) > strtotime($term['due_date'])) {
+                    $this->setError('email_datetime has an higher date then the due_date of the same term');
+                    return false;
+                }
             }
 
-            if (!is_null($term['sms_datetime'])) {
-                if (is_null($array['mobilenumber']) || is_null($array['sms_template'])) {
+            if (!empty($term['sms_datetime'])) {
+                if (empty($array['mobilenumber']) || empty($array['sms_template'])) {
                     $this->seterror('sms_datetime was specified in term therefore mobilenumber & sms_template are required');
                     return false;
                 }
 
-                $date = strtotime($term['sms_datetime']);
+                if (strtotime($term['sms_datetime']) > strtotime($term['due_date'])) {
+                    $this->setError('sms_datetime has an higher date then the due_date of the same term');
+                    return false;
+                }
             }
 
-            if (!is_null($term['reminder_datetime'])) {
-                if (is_null($array['emailaddress']) || is_null($array['reminder_template'])) {
+            if (!empty($term['reminder_datetime'])) {
+                if (empty($array['emailaddress']) || empty($array['reminder_template'])) {
                     $this->seterror('reminder_datetime was specified in term therefore emailaddress & reminder_template are required');
                     return false;
                 }
 
-                $date = strtotime($term['reminder_datetime']);
+                if (strtotime($term['reminder_datetime']) > strtotime($term['due_date'])) {
+                    $this->setError('reminder_datetime has an higher date then the due_date of the same term');
+                    return false;
+                }
             }
 
-            if (!is_null($term['letter_datetime'])) {
-                if (is_null($array['address_street']) || is_null($array['address_postcode']) || is_null($array['address_city']) || is_null($array['letter_template'])) {
+            if (!empty($term['letter_datetime'])) {
+                if (empty($array['address_street']) || empty($array['address_postcode']) || empty($array['address_city']) || empty($array['letter_template'])) {
                     $this->seterror('letter_datetime was specified in term therefore address_street, address_postcode, address_city & letter_template are required');
                     return false;
                 }
 
-                $date = strtotime($term['letter_datetime']);
+                if (strtotime($term['letter_datetime']) > strtotime($term['due_date'])) {
+                    $this->setError('letter_datetime has an higher date then the due_date of the same term');
+                    return false;
+                }
             }
 
             $totalTermAmount = $term['term_amount']++;
 
             // Check date business logic
-            $dueDate = strtotime($term['due_date']);
 
-            if ($dueDate > $date) {
-                $this->seterror('duedate in term is higher then date of action');
-                return false;
-            }
-
-            if ($id == 0) {
+            /* if ($id == 0) {
                 $prevDate = $date;
             } else {
                 if ($prevDate > $date) {
                     $this->seterror('duedate of last term is higher then current term');
                     return false;
                 }
-            }
+            } */
         }
 
         // Check amount business logic
@@ -275,14 +281,13 @@ class messages extends base {
         $totalInvoiceAmount = 0;
         foreach ($array['invoices']['invoice'] as $invoice)
         {
-            $totalInvoiceAmount = $invoice['invoice_amount']++;
+            $totalInvoiceAmount += $invoice['invoice_amount'];
         }
 
         if ($totalInvoiceAmount < 1) {
             $this->setError('The total amount of all invoice_amount combined must be greater then 0');
             return false;
         }
-
         if ($totalTermAmount !== $totalInvoiceAmount) {
             $this->setError('The total amount of invoice_amount must be equal to total of term_amount');
             return false;

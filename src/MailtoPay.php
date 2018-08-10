@@ -147,7 +147,7 @@ class MailtoPay
         }
     }
 
-    public function postMessages($array = array())
+    public function postMessages($array)
     {
         // Validate parameters
         $validate = new validations\messages();
@@ -252,7 +252,6 @@ class MailtoPay
                 } else {
                     if (is_array($baseArray[$key]) and $firstLoop == false) {
                         if (isset($baseArray[$key][0])) {
-
                             // Dont add another array item here that is processed within the recusive function itself
                             $xmlArray = self::setBasePostArray($array[$key], $value, false, $key);
                             return $xmlArray;

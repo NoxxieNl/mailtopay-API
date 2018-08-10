@@ -1,5 +1,5 @@
 <?php
-namespace bosveld\mailtopay\resonses;
+namespace bosveld\mailtopay\responses;
 
 class ResponseException extends \Exception {
 
