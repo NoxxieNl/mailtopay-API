@@ -80,6 +80,13 @@ class messages extends base {
                 return false;
             }
         }
+
+        if (!is_null($status)) {
+            if (!in_array($status, self::ALLOWED_STATUS)) {
+                $this->setError('parameter status has an invalid values, allowed values are ' . implode(', ', self::ALLOWED_STATUS));
+                return false;
+            }
+        }
         
         if (!is_null($batch_id)) {
             if (strlen($batch_id) > 50) {
