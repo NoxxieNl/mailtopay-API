@@ -97,29 +97,15 @@ class MailtoPay
 
     public function postSms($number, $message, $date = null, $time = null)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+
+        // Validate parameters
+        $validate = new validations\sms();
+        if ($validate->post($number, $message, $date, $time) === false) {
+            throw new \Exception($validate->getError());
         }
 
-        if (!is_null($date) || !is_null($time)) {
-            if (is_null($date) || is_null($time)) {
-                throw new \Exception(__METHOD__ . ' called without setting $date and $time parameter');
-            }
-
-            if (!\DateTime::createFromFormat('Y-m-d', $date)) {
-                throw new \Exception(__METHOD__ . ' detected an invalid $date notation');
-            } else {
-                // This is to allow dates like 2018-08-1
-                $date = \DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
-            }
-
-            if (!\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d') . ' ' . $time)) {
-                throw new \Exception(__METHOD__ . ' detected an invalid $time notation');
-            }
-        }
-
+        // Execute request
         $response = endpoints\Sms::post($number, $message, $date, $time);
-
         if ($response) {
             return $response;
         } else {
@@ -129,12 +115,14 @@ class MailtoPay
 
     public function getFlow($id)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\flow();
+        if ($validate->get($id, $date, $status, $batch_id, $rpp, $page) === false) {
+            throw new \Exception($validate->getError());
         }
 
+        // Execute request
         $response = endpoints\Flow::get($id);
-
         if ($response) {
             return $response;
         } else {
