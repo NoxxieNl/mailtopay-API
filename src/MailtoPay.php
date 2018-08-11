@@ -78,7 +78,7 @@ class mailtopay
         }
     }
 
-    public function postPayLinks($array)
+    public function postPayLinks(array $array)
     {
         // Validate parameters
         $validate = new validations\payLinks();
@@ -147,7 +147,7 @@ class mailtopay
         }
     }
 
-    public function postMessages($array)
+    public function postMessages(array $array)
     {
         // Validate parameters
         $validate = new validations\messages();
@@ -183,12 +183,14 @@ class mailtopay
 
     public function getCollectionOrders($id = null, $rpp = null, $page = null, $started_start = null, $started_end = null, $status_start = null, $status_end = null)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\collectionOrders();
+        if ($validate->get($id, $rpp, $page, $started_start, $started_end, $status_start, $status_end) === false) {
+            throw new \exception($validate->getError());
         }
 
-        $response = endpoints\CollectionOrders::get($id, $rpp, $page, $started_start, $started_end, $status_start, $status_end);
-
+        // Execute request
+        $response = endpoints\collectionOrders::get($id, $rpp, $page, $started_start, $started_end, $status_start, $status_end);
         if ($response) {
             return $response;
         } else {
@@ -196,14 +198,16 @@ class mailtopay
         }
     }
 
-    public function postCollectionOrders($array = array())
+    public function postCollectionOrders(array $array)
     {
-        if (self::$username == null || self::$password == null) {
-            throw new \Exception(__METHOD__ .  'requires $username and $password to be set');
+        // Validate parameters
+        $validate = new validations\collectionOrders();
+        if ($validate->post($id, $rpp, $page, $started_start, $started_end, $status_start, $status_end) === false) {
+            throw new \exception($validate->getError());
         }
 
+        // Execute request
         $response = endpoints\CollectionOrders::post($array);
-
         if ($response) {
             return $response;
         } else {

@@ -1,8 +1,8 @@
 <?php
 namespace bosveld\mailtopay\endpoints;
 
-use MailtoPay\MailtoPay;
-use MailtoPay\Responses;
+use bosveld\mailtopay\Mailtopay;
+use bosveld\mailtopay\Responses;
 
 use Unirest;
 use pdeans\Builders\XmlBuilder;
@@ -31,20 +31,24 @@ class CollectionOrders extends MailtoPay {
         'new_variable5' => '',
         'new_invoice' => [
             'invoice' => [
-                'invoice_number' => '',
-                'invoice_description' => '',
-                'invoice_amount' => '',
-                'invoice_date' => '',
-                'invoice_date_due' => ''
+                [
+                    'invoice_number' => '',
+                    'invoice_description' => '',
+                    'invoice_amount' => '',
+                    'invoice_date' => '',
+                    'invoice_date_due' => ''
+                ]
             ]
         ],
         'update_invoice' => [
             'invoice' => [
-                'invoice_number' => '',
-                'invoice_description' => '',
-                'invoice_amount' => '',
-                'invoice_date' => '',
-                'invoice_date_due' => ''
+                [
+                    'invoice_number' => '',
+                    'invoice_description' => '',
+                    'invoice_amount' => '',
+                    'invoice_date' => '',
+                    'invoice_date_due' => ''
+                ]
             ]
         ]
     ];
