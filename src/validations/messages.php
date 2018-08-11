@@ -209,6 +209,8 @@ class messages extends base {
         $totalTermAmount = 0;
         foreach ($array['terms']['term'] as $id => $term)
         {
+            $dateArray = [];
+
             // Check required fields business logic
             if (!empty($term['email_datetime'])) {
                 if (empty($array['emailaddress']) || empty($array['email_template'])) {
@@ -219,6 +221,8 @@ class messages extends base {
                 if (strtotime($term['email_datetime']) > strtotime($term['due_date'])) {
                     $this->setError('email_datetime has an higher date then the due_date of the same term');
                     return false;
+                } else {
+                    $dateArray[] = strtotime($term['email_datetime']);
                 }
             }
 
@@ -231,6 +235,8 @@ class messages extends base {
                 if (strtotime($term['sms_datetime']) > strtotime($term['due_date'])) {
                     $this->setError('sms_datetime has an higher date then the due_date of the same term');
                     return false;
+                } else {
+                    $dateArray[] = strtotime($term['sms_datetime']);
                 }
             }
 
@@ -243,6 +249,8 @@ class messages extends base {
                 if (strtotime($term['reminder_datetime']) > strtotime($term['due_date'])) {
                     $this->setError('reminder_datetime has an higher date then the due_date of the same term');
                     return false;
+                } else {
+                    $dateArray[] = strtotime($term['reminder_datetime']);
                 }
             }
 
@@ -255,21 +263,28 @@ class messages extends base {
                 if (strtotime($term['letter_datetime']) > strtotime($term['due_date'])) {
                     $this->setError('letter_datetime has an higher date then the due_date of the same term');
                     return false;
+                } else {
+                    $dateArray[] = strtotime($term['letter_datetime']);
                 }
             }
 
-            $totalTermAmount = $term['term_amount']++;
+            // Count total term amounts
+            $totalTermAmount += $term['term_amount'];
 
             // Check date business logic
-
-            /* if ($id == 0) {
-                $prevDate = $date;
+            if ($id == 0) { 
+                $prevDate = strtotime($term['due_date']);
             } else {
-                if ($prevDate > $date) {
-                    $this->seterror('duedate of last term is higher then current term');
-                    return false;
+                foreach ($dateArray as $date)
+                {
+                    if ($prevDate > $date) {
+                        $this->seterror('duedate of last term is higher then action datetimee of current term');
+                        return false;
+                    }
                 }
-            } */
+
+                $prevDate = $term['due_date'];
+            }
         }
 
         // Check amount business logic
