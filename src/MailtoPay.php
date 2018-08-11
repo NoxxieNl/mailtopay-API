@@ -1,6 +1,6 @@
 <?php namespace bosveld\mailtopay;
 
-class MailtoPay 
+class mailtopay 
 {
 
     CONST BASE_URL = 'https://api.mailtopay.nl/api/2.0';
@@ -23,7 +23,7 @@ class MailtoPay
         // Check if username and password are specified, if not check if there already set
         if ($username == null || $password == null) {
             if (self::$username == null || self::$password == null) {
-                throw new \Exception('Username and password must be specificied for ' . __METHOD__);
+                throw new \exception('Username and password must be specificied for ' . __METHOD__);
             }
         } else {
             self::$username = $username;
@@ -49,11 +49,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\templates();
         if ($validate->get($type, $rpp, $page) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Templates::get($type, $rpp, $page);        
+        $response = endpoints\templates::get($type, $rpp, $page);        
         if ($response) {
             return $response;
         } else {
@@ -64,13 +64,13 @@ class MailtoPay
     public function getPayLinks($id = null, $date = null, $status = null, $batch_id = null, $rpp = null, $page = null)
     {
         // Validate parameters
-        $validate = new validations\paylinks();
+        $validate = new validations\payLinks();
         if ($validate->get($id, $date, $status, $batch_id, $rpp, $page) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\PayLinks::get($id, $date, $status, $batch_id, $rpp, $page);
+        $response = endpoints\payLinks::get($id, $date, $status, $batch_id, $rpp, $page);
         if ($response) {
             return $response;
         } else {
@@ -81,13 +81,13 @@ class MailtoPay
     public function postPayLinks($array)
     {
         // Validate parameters
-        $validate = new validations\paylinks();
+        $validate = new validations\payLinks();
         if ($validate->post($array) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\PayLinks::post($array);
+        $response = endpoints\payLinks::post($array);
         if ($response) {
             return $response;
         } else {
@@ -101,11 +101,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\sms();
         if ($validate->post($number, $message, $date, $time) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Sms::post($number, $message, $date, $time);
+        $response = endpoints\sms::post($number, $message, $date, $time);
         if ($response) {
             return $response;
         } else {
@@ -118,11 +118,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\flow();
         if ($validate->get($id, $date, $status, $batch_id, $rpp, $page) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Flow::get($id);
+        $response = endpoints\flow::get($id);
         if ($response) {
             return $response;
         } else {
@@ -135,11 +135,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\messages();
         if ($validate->get($id, $date, $status, $batch_id, $debtornumber, $payment_reference, $rpp, $page) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Messages::get($id, $date, $status, $batch_id, $debtornumber, $payment_reference, $rpp, $page);
+        $response = endpoints\messages::get($id, $date, $status, $batch_id, $debtornumber, $payment_reference, $rpp, $page);
         if ($response) {
             return $response;
         } else {
@@ -152,11 +152,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\messages();
         if ($validate->post($array) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Messages::post($array);
+        $response = endpoints\messages::post($array);
         if ($response) {
             return $response;
         } else {
@@ -169,11 +169,11 @@ class MailtoPay
         // Validate parameters
         $validate = new validations\messages();
         if ($validate->put($id, $status, $batch_id, $debtornumber, $payment_reference) === false) {
-            throw new \Exception($validate->getError());
+            throw new \exception($validate->getError());
         }
 
         // Execute request
-        $response = endpoints\Messages::put($id, $status, $batch_id, $debtornumber, $payment_reference);
+        $response = endpoints\messages::put($id, $status, $batch_id, $debtornumber, $payment_reference);
         if ($response) {
             return $response;
         } else {

@@ -168,15 +168,22 @@ class messages extends base {
                                 return false;
                             }
 
-                            if ($subKey == 'terms') {
+                            if ($subKey == 'term') {
+                                
                                 if ($invoiceKey == 'term_amount' && (!is_int($arrayValue[$invoiceKey]) || $arrayValue[$invoiceKey] < 1 || $arrayValue[$invoiceKey] > 5000000)) {
-                                    $this->setError('array item ' . $invoiceKey . ' in invoice array is larger then 50 characters');
+                                    $this->setError('array item ' . $invoiceKey . ' in term array is larger then 50 characters');
                                     return false;
                                 }
 
-                                elseif (($invoiceKey == 'email_datetime' || $invoiceKey == 'sms_datetime' || $invoiceKey == 'letter_datetime' || $invoiceKey == 'reminder_datetime' || $invoiceKey == 'due_date') && !\DateTime::createFromFormat('Y-m-d', ($arrayValue[$invoiceKey]))) {
-                                    $this->setError('array item ' . $invoiceKey . ' in invoice array has an invalid date');
-                                    return false;
+                                elseif ($invoiceKey == 'due_date' && !\DateTime::createFromFormat('Y-m-d', ($arrayValue[$invoiceKey]))) {
+                                    $this->setError('array item ' . $invoiceKey . 'in term array has an invalid date notation');
+                                }
+
+                                elseif (($invoiceKey == 'email_datetime' || $invoiceKey == 'sms_datetime' || $invoiceKey == 'letter_datetime' || $invoiceKey == 'reminder_datetime') && !empty($arrayValue[$invoiceKey])) {
+                                    if (!\DateTime::createFromFormat('Y-m-d\\TH:i:s', ($arrayValue[$invoiceKey]))) {
+                                        $this->setError('array item ' . $invoiceKey . ' in term array has an invalid datetime notation');
+                                        return false;
+                                    }
                                 }
                             } else {
                                 if ($invoiceKey == 'invoicenumber' && strlen($arrayValue[$invoiceKey]) > 50) {
