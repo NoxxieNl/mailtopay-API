@@ -1,6 +1,6 @@
 {
     "name": "noxxie/mailtopay",
-	"type": "library",
+    "type": "library",
     "description": "An PHP MailtoPay API interface",
     "license": "Proprietary",
     "authors": [
