@@ -8,8 +8,10 @@ use GuzzleHttp\Client as GuzzleHttp;
 use Noxxie\Mailtopay\Contracts\Endpoint;
 use Noxxie\Mailtopay\Responses\Response;
 use Noxxie\Mailtopay\Exceptions\ResponseException;
+use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
+use Noxxie\Mailtopay\Contracts\Client as ClientContract;
 
-class Client {
+class Client implements ClientContract {
 
     /**
      * Contains the username for auhtentication.
@@ -79,9 +81,9 @@ class Client {
      * Sets the endpoint we are going to use. (Base uri is emitted).
      *
      * @param Endpoint $endpoint
-     * @return Client
+     * @return \Noxxie\Mailtopay\Contracts\Client
      */
-    public function setEndpoint(Endpoint $endpoint) : Client
+    public function setEndpoint(Endpoint $endpoint) : ClientContract
     {
         $this->endpoint = $endpoint;
         return $this;
@@ -91,9 +93,9 @@ class Client {
      * Sets the HTTP client instance.
      *
      * @param GuzzleHTTP $restClient
-     * @return Client
+     * @return \Noxxie\Mailtopay\Contracts\Client
      */
-    public function setRestClient(GuzzleHTTP $restClient) : Client
+    public function setRestClient(GuzzleHTTP $restClient) : ClientContract
     {
         $this->restClient = $restClient;
         return $this;
@@ -102,9 +104,9 @@ class Client {
     /**
      * Executes the call to the API end point and evaluate the response.
      *
-     * @return void
+     * @return \Noxxie\Mailtopay\Contracts\Response
      */
-    public function execute()
+    public function execute() : ResponseContract
     {
         if (is_null($this->endpoint)) {
             throw new BadMethodCallException('No endpoint specified for execution');
