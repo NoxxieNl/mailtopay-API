@@ -102,7 +102,6 @@ Class Parser {
      */
     protected function validateXmlAgainstXsd() : void
     {
-        // TODO write the logic that either the normal response XSD is parsed or the error XSD.
         if (!$this->dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).'.xsd')) {
             throw new InvalidXmlException('The response XML from the API is not valid against the XSD.');
         }   

@@ -12,7 +12,7 @@ class Sms extends Endpoint implements EndpointContract {
      * @var array
      */
     protected $allowedMethods = [
-        'get'
+        'post'
     ];
 
     /**
@@ -20,7 +20,7 @@ class Sms extends Endpoint implements EndpointContract {
      *
      * @var string
      */
-    protected $endpoint = 'messages';
+    protected $endpoint = 'sms';
 
     /**
      * Specify the valid parameters that are allowed to be used in this endpoint post method.
@@ -28,12 +28,12 @@ class Sms extends Endpoint implements EndpointContract {
      *
      * @return array
      */
-    protected function postValidParamaeters() : array
+    protected function postValidParameters() : array
     {
         return [
             'mobilenumber' => 'digits:10',
-            'sms_message' => 'integer|min:1|max:1280',
-            'sms_datetime' => 'date_format:Y-m-dTH:i:s',
+            'sms_message' => 'string|min:1|max:1280',
+            'sms_datetime' => 'date_format:Y-m-d\TH:i:s',
         ];
     }
 }

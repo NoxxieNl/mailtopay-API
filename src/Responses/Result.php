@@ -21,6 +21,7 @@ class Result {
 
     /**
      * Magic call method allows us to dynamicly declare the set methods we want with the needed validation.
+     * Also every get call will be checked here and data will be returned if the property is set.
      *
      * @param string $method
      * @param array $arguments

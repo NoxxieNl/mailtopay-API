@@ -1,0 +1,31 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:all>
+		<xs:element name="mobilenumber">
+		  <xs:simpleType>
+		    <xs:restriction base="xs:string">
+		      <xs:minLength value="10"/>
+		      <xs:maxLength value="20"/>
+		    </xs:restriction>
+		  </xs:simpleType>
+		</xs:element>
+		<xs:element name="sms_message">
+		  <xs:simpleType>
+		    <xs:restriction base="xs:string">
+		      <xs:minLength value="1"/>
+		      <xs:maxLength value="1280"/>
+		    </xs:restriction>
+		  </xs:simpleType>
+		</xs:element>
+	    <xs:element name="sms_datetime">
+          <xs:simpleType>
+            <xs:restriction base="xs:dateTime">
+	        </xs:restriction>
+          </xs:simpleType>
+		</xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

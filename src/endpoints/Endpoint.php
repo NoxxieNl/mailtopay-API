@@ -10,6 +10,8 @@ use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Noxxie\Mailtopay\Traits\ValidateTrait;
 use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
+use Noxxie\Mailtopay\Xml\Creator;
+use SimpleXMLElement;
 
 class Endpoint {
 
@@ -44,6 +46,13 @@ class Endpoint {
     protected $parameters = [];
 
     /**
+     * Contains the xml creator for the usage when the HTTP method is POST or PUT.
+     *
+     * @var \Noxxie\Mailtopay\Xml\Creator
+     */
+    protected $xmlCreator;
+
+    /**
      * Constructor method
      *
      * @param string|null $method
@@ -51,6 +60,11 @@ class Endpoint {
      */
     public function __construct(?string $method = null, ?array $parameters = null)
     {
+        $this->validator = new Factory(new Translator(new FileLoader(new Filesystem(), ''), 'en_US'));
+        $this->xmlCreator = new Creator();
+
+        $this->addValidationOptionsToValidatior();
+
         if (!is_null($method)) {
             $this->setMethod($method);
         }
@@ -58,9 +72,6 @@ class Endpoint {
         if (!is_null($parameters)) {
             $this->setParameters($parameters);
         }
-
-        $this->validator = new Factory(new Translator(new FileLoader(new Filesystem(), ''), 'en_US'));
-        $this->addValidationOptionsToValidatior();
     }
 
     /**
@@ -125,6 +136,13 @@ class Endpoint {
     public function getParameters() : array
     {
         return $this->parameters;
+    }
+
+    public function getParametersAsXml() : string
+    {
+        return $this->xmlCreator->addNodesFromArray($this->parameters)
+                                ->setType($this->endpoint)
+                                ->getXml();
     }
 
     /**

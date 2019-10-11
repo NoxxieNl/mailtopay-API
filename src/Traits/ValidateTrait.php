@@ -36,6 +36,7 @@ trait ValidateTrait {
      */
     protected function hasValidParameter(string $parameter) : void
     {
+
         if (!method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
@@ -65,7 +66,7 @@ trait ValidateTrait {
         }
 
         $validParameters = call_user_func_array([$this, $this->method.'ValidParameters'], []);
-
+        
         if ($validParameters[$parameter] != '') {
             $validation = $this->validator->make([
                     $parameter => $arguments[0]

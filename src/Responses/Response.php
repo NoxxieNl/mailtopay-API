@@ -1,10 +1,12 @@
 <?php
 namespace Noxxie\Mailtopay\Responses;
 
+use DOMDocument;
+use ReflectionClass;
+use BadMethodCallException;
 use Noxxie\Mailtopay\Responses\Metadata;
 use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
-use DOMDocument;
 
 class Response implements ResponseContract {
 
@@ -92,5 +94,27 @@ class Response implements ResponseContract {
         foreach ($this->dom->getElementsByTagName('result') as $result) {
             $this->results[] = new Result($result);
         }
+    }
+
+    /**
+     * Magic call method, when only one result is retrieved from the API allow the end user to directly call the
+     * get methods. When mulitple results are retrieved this will return the data for the first retrieved result.
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call(string $method, array $arguments)
+    {
+        if (strtolower(substr($method, 0, 3)) != 'get' && $this->getResultsCount() == 0) {
+            throw new BadMethodCallException(sprintf(
+                'Call to undefined method %s::%s()',
+                (new ReflectionClass($this))->getShortName(),
+                $method
+            ));
+        } 
+        
+        $resultInstance = $this->getResults()[0];
+        return call_user_func_array([$resultInstance, $method], $arguments);
     }
 }

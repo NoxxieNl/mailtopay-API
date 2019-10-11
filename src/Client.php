@@ -122,22 +122,22 @@ class Client {
             $response = $this->restClient->request(
                 $this->endpoint->getMethod(),
                 $this->endpoint->getEndpoint(), [
-                    // TODO make a xml out of the getParameters
-                    'body' => $this->endpoint->getParameters(),
+                    'content-type' => 'text/xml; charset=UTF8',
+                    'body' => $this->endpoint->getParametersAsXml(),
                 ]
             );
         } else {
             throw new RuntimeException('Unknown HTTP method specified for execution.');
         }
 
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
             // When a 5xx http code is returned something is really wrong.
             // This allows the user to do something else when the server just doesn't respond.
             if (substr($response->getStatusCode(), 0, 1) == 5) {
                 throw new NoResponseException('The MailtoPay server did not response to the request.'); 
             } else {
                 $this->xmlParser->setType('error')
-                                ->execute($response->getBody());
+                                ->execute((string) $response->getBody());
 
                 throw new ResponseException(
                     $this->xmlParser->getXml()->getElementsByTagName('description')->item(0)->nodeValue, 
@@ -147,7 +147,7 @@ class Client {
         }
 
         $this->xmlParser->setType('response')
-                        ->execute($response->getBody());
+                        ->execute((string) $response->getBody());
 
         return new Response($this->xmlParser->getXml());
     }
