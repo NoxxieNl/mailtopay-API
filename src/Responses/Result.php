@@ -1,5 +1,5 @@
 <?php
-namespace Bosveld\Mailtopay\Responses;
+namespace Noxxie\Mailtopay\Responses;
 
 use DOMElement;
 use ReflectionClass;

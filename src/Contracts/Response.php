@@ -1,7 +1,7 @@
 <?php
-namespace Bosveld\Mailtopay\Contracts;
+namespace Noxxie\Mailtopay\Contracts;
 
-use Bosveld\Mailtopay\Contracts\Metadata as MetadataContract;
+use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 
 interface Response {
 

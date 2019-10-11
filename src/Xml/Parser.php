@@ -1,5 +1,5 @@
 <?php
-namespace Bosveld\Mailtopay\Xml;
+namespace Noxxie\Mailtopay\Xml;
 
 use BadMethodCallException;
 use DOMDocument;
@@ -80,7 +80,7 @@ Class Parser {
      * Sets the specific response type.
      *
      * @param string $type
-     * @return \Bosveld\Mailtopay\Xml\Parser
+     * @return \Noxxie\Mailtopay\Xml\Parser
      */
     public function setType(string $type) : Parser
     {

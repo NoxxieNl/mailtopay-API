@@ -1,9 +1,9 @@
 <?php
-namespace Bosveld\Mailtopay\Responses;
+namespace Noxxie\Mailtopay\Responses;
 
-use Bosveld\Mailtopay\Responses\Metadata;
-use Bosveld\Mailtopay\Contracts\Metadata as MetadataContract;
-use Bosveld\Mailtopay\Contracts\Response as ResponseContract;
+use Noxxie\Mailtopay\Responses\Metadata;
+use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
+use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
 use DOMDocument;
 
 class Response implements ResponseContract {
@@ -18,7 +18,7 @@ class Response implements ResponseContract {
     /**
      * Contains the metadata reponse instance.
      *
-     * @var \Bosveld\Mailtopay\Contracts\Metadata|null
+     * @var \Noxxie\Mailtopay\Contracts\Metadata|null
      */
     protected $meta = null;
 
@@ -45,7 +45,7 @@ class Response implements ResponseContract {
     /**
      * Retrieves the meta data instance.
      *
-     * @return \Bosveld\Mailtopay\Contracts\Metadata
+     * @return \Noxxie\Mailtopay\Contracts\Metadata
      */
     public function getMetadata() : MetadataContract
     {

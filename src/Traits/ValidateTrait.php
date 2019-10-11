@@ -1,8 +1,8 @@
 <?php
-namespace Bosveld\Mailtopay\Traits;
+namespace Noxxie\Mailtopay\Traits;
 
 use ReflectionClass;
-use Bosveld\Mailtopay\Exceptions\InvalidParameterException;
+use Noxxie\Mailtopay\Exceptions\InvalidParameterException;
 
 trait ValidateTrait {
     /**

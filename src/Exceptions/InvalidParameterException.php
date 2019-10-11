@@ -1,5 +1,5 @@
 <?php
-namespace Bosveld\Mailtopay\Exceptions;
+namespace Noxxie\Mailtopay\Exceptions;
 
 use Exception;
 

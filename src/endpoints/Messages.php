@@ -1,8 +1,8 @@
 <?php
-namespace Bosveld\Mailtopay\Endpoints;
+namespace Noxxie\Mailtopay\Endpoints;
 
-use Bosveld\Mailtopay\Endpoints\Endpoint;
-use Bosveld\Mailtopay\Contracts\Endpoint as EndpointContract;
+use Noxxie\Mailtopay\Endpoints\Endpoint;
+use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
 class Messages extends Endpoint implements EndpointContract {
 

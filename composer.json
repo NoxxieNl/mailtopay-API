@@ -1,13 +1,13 @@
 {
-    "name": "bosveld/mailtopay",
+    "name": "Noxxie/mailtopay",
 	"type": "library",
     "description": "An PHP MailtoPay API interface",
     "license": "Proprietary",
     "authors": [
         {
             "name": "Patrick Rennings",
-            "email": "prennings@bosveld.nl",
-            "homepage": "https://bosveld.nl/",
+            "email": "prennings@Noxxie.nl",
+            "homepage": "https://Noxxie.nl/",
             "role": "Developer"
         }
     ],
@@ -18,6 +18,6 @@
     },
 
     "autoload": {
-        "psr-4": { "Bosveld\\Mailtopay\\" : "src/" }
+        "psr-4": { "Noxxie\\Mailtopay\\" : "src/" }
     }
 }

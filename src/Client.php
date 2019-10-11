@@ -1,13 +1,13 @@
 <?php
-namespace Bosveld\Mailtopay;
+namespace Noxxie\Mailtopay;
 
 use RuntimeException;
 use BadMethodCallException;
-use Bosveld\Mailtopay\Xml\Parser;
+use Noxxie\Mailtopay\Xml\Parser;
 use GuzzleHttp\Client as GuzzleHttp;
-use Bosveld\Mailtopay\Contracts\Endpoint;
-use Bosveld\Mailtopay\Responses\Response;
-use Bosveld\Mailtopay\Exceptions\ResponseException;
+use Noxxie\Mailtopay\Contracts\Endpoint;
+use Noxxie\Mailtopay\Responses\Response;
+use Noxxie\Mailtopay\Exceptions\ResponseException;
 
 class Client {
 
@@ -42,7 +42,7 @@ class Client {
     /**
      * Contains the used xmlParser.
      *
-     * @var \Bosveld\Mailtopay\Xml\Parser
+     * @var \Noxxie\Mailtopay\Xml\Parser
      */
     protected $xmlParser;
 

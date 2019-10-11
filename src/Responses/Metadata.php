@@ -1,7 +1,7 @@
 <?php
-namespace Bosveld\Mailtopay\Responses;
+namespace Noxxie\Mailtopay\Responses;
 
-use Bosveld\Mailtopay\Contracts\Metadata as MetadataContract;
+use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 use DOMDocument;
 
 class Metadata implements MetadataContract {

@@ -1,5 +1,5 @@
 <?php
-namespace Bosveld\Mailtopay\Endpoints;
+namespace Noxxie\Mailtopay\Endpoints;
 
 use ReflectionClass;
 use RuntimeException;
@@ -8,8 +8,8 @@ use Illuminate\Validation\Factory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
-use Bosveld\Mailtopay\Traits\ValidateTrait;
-use Bosveld\Mailtopay\Exceptions\InvalidMethodException;
+use Noxxie\Mailtopay\Traits\ValidateTrait;
+use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
 
 class Endpoint {
 
@@ -132,7 +132,7 @@ class Endpoint {
      *
      * @param string $method
      * @param array $arguments
-     * @return \Bosveld\Mailtopay\Contracts\Endpoint
+     * @return \Noxxie\Mailtopay\Contracts\Endpoint
      */
     public function __call(string $method, array $arguments) : Endpoint
     {

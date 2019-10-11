@@ -1,5 +1,5 @@
 <?php
-namespace Bosveld\Mailtopay\Contracts;
+namespace Noxxie\Mailtopay\Contracts;
 
 interface Endpoint {
 
