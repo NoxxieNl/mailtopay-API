@@ -1,5 +1,4 @@
-# Remove the test page from any git commits
-index.php
+vendor
+composer.lock
 
-# uncomment below when packages goes to production
-#/vendor
+index.php

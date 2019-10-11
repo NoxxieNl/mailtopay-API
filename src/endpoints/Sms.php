@@ -1,46 +1,39 @@
 <?php
-namespace bosveld\mailtopay\endpoints;
+namespace Bosveld\Mailtopay\Endpoints;
 
-use bosveld\mailtopay\Mailtopay;
-use bosveld\mailtopay\Responses;
+use Bosveld\Mailtopay\Endpoints\Endpoint;
+use Bosveld\Mailtopay\Contracts\Endpoint as EndpointContract;
 
-use Unirest;
-use pdeans\Builders\XmlBuilder;
+class Sms extends Endpoint implements EndpointContract {
 
-class Sms extends MailtoPay {
-    
-    CONST ENDPOINT_URL = '/sms';
-
-    CONST POST_BASE_ARRAY = [
-        'mobilenumber' => '',
-        'sms_message' => '',
-        'sms_datetime' => ''
+    /**
+     * Specifies the allowed HTTP methods that can be used.
+     *
+     * @var array
+     */
+    protected $allowedMethods = [
+        'get'
     ];
 
-    public function post($number, $message, $date = null, $time = null)
+    /**
+     * Defines what specific endpoint to use.
+     *
+     * @var string
+     */
+    protected $endpoint = 'messages';
+
+    /**
+     * Specify the valid parameters that are allowed to be used in this endpoint post method.
+     * Also define the validation rules for value of the parameter.
+     *
+     * @return array
+     */
+    protected function postValidParamaeters() : array
     {
-        Unirest\Request::auth(parent::$username, parent::$password);
-        Unirest\Request::verifyPeer(false); 
-
-        $array = [
-            'mobilenumber' => $number,
-            'sms_message' => $message,
-            'sms_datetime' => (is_null($date) || is_null($time) ? date('Y-m-d\TH:i:s') : $date . 'T' . $time)
+        return [
+            'mobilenumber' => 'digits:10',
+            'sms_message' => 'integer|min:1|max:1280',
+            'sms_datetime' => 'date_format:Y-m-dTH:i:s',
         ];
-
-        $xmlArray = parent::setBasePostArray($array);
-        $xmlBuilder = new XmlBuilder();
-        $xml = $xmlBuilder->create('request', ['@tags' => $xmlArray]);
-
-        $response = Unirest\Request::post(parent::BASE_URL . self::ENDPOINT_URL, [], $xml);
-
-        if ($response->code == parent::HTTP_CREATED) {
-            $responseObject = new Responses\DefaultResponse();
-            $responseObject->get($response->body, true);
-
-            return $responseObject->getObject();
-        } else {
-            throw new Responses\ResponseException($response);
-        }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "bosveld/Mailtopay",
+    "name": "bosveld/mailtopay",
 	"type": "library",
     "description": "An PHP MailtoPay API interface",
     "license": "Proprietary",
@@ -12,10 +12,12 @@
         }
     ],
     "require": {
-        "pdeans/xml-builder": "^1.0",
-        "mashape/unirest-php": "^3.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "nesbot/carbon": "^2.25",
+        "illuminate/validation": "^6.2"
     },
+
     "autoload": {
-        "psr-4": { "bosveld\\mailtopay\\" : "src/" }
+        "psr-4": { "Bosveld\\Mailtopay\\" : "src/" }
     }
 }

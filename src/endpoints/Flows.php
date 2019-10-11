@@ -4,7 +4,7 @@ namespace Bosveld\Mailtopay\Endpoints;
 use Bosveld\Mailtopay\Endpoints\Endpoint;
 use Bosveld\Mailtopay\Contracts\Endpoint as EndpointContract;
 
-class Paylinks extends Endpoint implements EndpointContract {
+class Flows extends Endpoint implements EndpointContract {
 
     /**
      * Specifies the allowed HTTP methods that can be used.
@@ -12,7 +12,7 @@ class Paylinks extends Endpoint implements EndpointContract {
      * @var array
      */
     protected $allowedMethods = [
-        'get', 'post'
+        'get'
     ];
 
     /**
@@ -20,7 +20,7 @@ class Paylinks extends Endpoint implements EndpointContract {
      *
      * @var string
      */
-    protected $endpoint = 'paylinks';
+    protected $endpoint = 'flows';
 
     /**
      * Specify the valid parameters that are allowed to be used in this endpoint get method.
@@ -31,13 +31,8 @@ class Paylinks extends Endpoint implements EndpointContract {
     protected function getValidParameters() : array
     {
         return [
-            'mpid' => 'integer',
-            'status_date' => 'date_format:Y-m-d',
-            'status' => 'array|status',
-            'id_batch' => 'integer',
-            'rrp' => 'integer|min:10|max:1000',
-            'page' => 'integer|min:1|max:10000',
-            'detail' => 'integer|min:1|max:1',
+            'id_flow' => 'integer',
+            'showssteps' => 'integer|min:1|max:1',
         ];
     }
 }
