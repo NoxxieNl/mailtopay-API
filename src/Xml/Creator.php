@@ -2,7 +2,9 @@
 namespace Noxxie\Mailtopay\Xml;
 
 use DOMDocument;
+use Illuminate\Support\Str;
 use SimpleXMLElement;
+use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
 
 class Creator {
 
@@ -58,7 +60,35 @@ class Creator {
     public function addNodesFromArray(array $parameters) : Creator
     {
         foreach ($parameters as $name => $value) {
+
+            if (is_array($value)) {
+                $this->addChildNodeWithNodesFromArray($name, $value);
+                continue;
+            }
+
             $this->addNode($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds a child node, with child nodes in it.
+     *
+     * @param string $name
+     * @param array $nodes
+     * @return Creator
+     */
+    public function addChildNodeWithNodesFromArray(string $name, array $nodes) : Creator
+    {
+        $parentNode = $this->xml->addChild($name);
+        
+        foreach ($nodes as $child) {
+            $childNode = $parentNode->addChild(Str::singular($name));
+
+            foreach ($child as $childNodeName => $childNodeValue) {
+                $childNode->addChild($childNodeName, $childNodeValue);
+            }
         }
 
         return $this;

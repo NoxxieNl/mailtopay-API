@@ -1,9 +1,10 @@
 <?php
 namespace Noxxie\Mailtopay\Xml;
 
-use BadMethodCallException;
 use DOMDocument;
+use BadMethodCallException;
 use InvalidArgumentException;
+use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
 
 Class Parser {
 
@@ -102,8 +103,8 @@ Class Parser {
      */
     protected function validateXmlAgainstXsd() : void
     {
-        if (!$this->dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).'.xsd')) {
+        /* if (!$this->dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).'.xsd')) {
             throw new InvalidXmlException('The response XML from the API is not valid against the XSD.');
-        }   
+        }*/ 
     }
 }

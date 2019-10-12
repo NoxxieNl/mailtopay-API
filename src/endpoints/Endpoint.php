@@ -10,12 +10,13 @@ use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Noxxie\Mailtopay\Traits\ValidateTrait;
 use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
+use Noxxie\Mailtopay\Traits\DefaultValuesTrait;
 use Noxxie\Mailtopay\Xml\Creator;
 use SimpleXMLElement;
 
 class Endpoint {
 
-    use ValidateTrait;
+    use ValidateTrait, DefaultValuesTrait;
 
     /**
      * Specifies the method we need to use to call the API.
@@ -140,7 +141,8 @@ class Endpoint {
 
     public function getParametersAsXml() : string
     {
-        return $this->xmlCreator->addNodesFromArray($this->parameters)
+        $parameters = $this->addDefaultParameterDataToParameters();
+        return $this->xmlCreator->addNodesFromArray($parameters)
                                 ->setType($this->endpoint)
                                 ->getXml();
     }
@@ -167,7 +169,7 @@ class Endpoint {
         }
 
         $parameter = strtolower(substr($method, 3, strlen($method) - 3));
-        
+    
         $this->hasValidParameter($parameter, $arguments);
         $this->hasValidaParameterData($parameter, $arguments);
         

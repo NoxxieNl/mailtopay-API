@@ -24,7 +24,7 @@ class Sms extends Endpoint implements EndpointContract {
 
     /**
      * Specify the valid parameters that are allowed to be used in this endpoint post method.
-     * Also define the validation rules for value of the parameter.
+     * Also define the validation rules for the value of the parameter.
      *
      * @return array
      */

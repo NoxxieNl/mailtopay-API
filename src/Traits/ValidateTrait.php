@@ -26,6 +26,21 @@ trait ValidateTrait {
         $this->validator->extend('messagetype', function($attribute, $value) {
             return in_array($value, ['email', 'sms', 'letter']);
         });
+
+        $this->validator->extend('invoices', function ($attribute, $value) {
+            foreach ($value as $invoice) {
+
+                if (!isset(
+                    $invoice['invoice_amount'],
+                    $invoice['invoice_date'],
+                    $invoice['invoice_description']
+                )) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -61,19 +76,34 @@ trait ValidateTrait {
      */
     protected function hasValidaParameterData(string $parameter, array $arguments) : void
     {
-        if (!method_exists($this, $this->method.'ValidParameters')) {
+        if (! method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
 
         $validParameters = call_user_func_array([$this, $this->method.'ValidParameters'], []);
-        
+    
         if ($validParameters[$parameter] != '') {
+            // When a array is specified we are going to search for additional validation rules
+            // for the data inside this array.
+            if (strpos($validParameters[$parameter], 'array') !== false and $parameter != 'status') {
+                $validationRules = [];
+
+                foreach ($validParameters as $validParameterKey => $validParameter) {
+                    if (strpos($validParameterKey, $parameter.'.*.') !== false) {
+                        $validationRules[$validParameterKey] = $validParameter;
+                    }
+                }
+            } else {
+                // Single validation for a specific parameter.
+                $validationRules = [
+                    $parameter => $validParameters[$parameter]
+                ];
+            }
+
             $validation = $this->validator->make([
                     $parameter => $arguments[0]
                 ], 
-                [
-                    $parameter => $validParameters[$parameter]
-                ]
+                $validationRules
             );
 
             if ($validation->fails()) {
