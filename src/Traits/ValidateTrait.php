@@ -15,7 +15,7 @@ trait ValidateTrait {
         // Validate the status parameter
         $this->validator->extend('status', function($attribute, $value) {
             foreach ($value as $status) {
-                if (!in_array($status, [101,300,500,700,701,702,703,704,900,998,999])) {
+                if (!in_array($status, [101,300,500,700,701,702,703,704,900,902,998,999])) {
                     return false;
                 }
             };

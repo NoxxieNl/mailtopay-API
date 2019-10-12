@@ -4,6 +4,7 @@ namespace Noxxie\Mailtopay\Responses;
 use DOMElement;
 use ReflectionClass;
 use BadMethodCallException;
+use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
 
 class Result {
 
@@ -43,6 +44,15 @@ class Result {
             return $this;
         } else {
             $property = $this->snake(substr($method, 3, strlen($method) - 3));
+            
+            if (! property_exists($this, $property)) {
+                throw new BadMethodCallException(sprintf(
+                    'Call to undefined method %s::%s()',
+                    (new ReflectionClass($this))->getShortName(),
+                    $method
+                ));
+            }
+
             return $this->$property;
         }
     }

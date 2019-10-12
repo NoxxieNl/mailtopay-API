@@ -2,8 +2,9 @@
 namespace Noxxie\Mailtopay\Xml;
 
 use DOMDocument;
-use Illuminate\Support\Str;
 use SimpleXMLElement;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
 
 class Creator {
@@ -129,7 +130,7 @@ class Creator {
      */
     public function setType(string $type) : Creator
     {
-        if (!in_array(strtolower($type), ['sms', 'paylinks', 'messages', 'collectionorders'])) {
+        if (!in_array(strtolower($type), ['sms', 'paylinks', 'messages', 'collectionorders', 'idin'])) {
             throw new InvalidArgumentException(sprintf(
                 'The specified reponse type "%s" is invalid.',
                 $type
