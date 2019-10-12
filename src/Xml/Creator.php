@@ -24,6 +24,13 @@ class Creator {
     protected $type = null;
 
     /**
+     * Contains the method that is used to call the API endpoint.
+     *
+     * @var string
+     */
+    protected $method;
+
+    /**
      * Contains the absolute path to the xsd directory.
      *
      * @var string
@@ -117,7 +124,7 @@ class Creator {
         $dom = new DOMDocument();
         $dom->loadXML($this->xml->asXml());
         
-        if (!$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).'.xsd')) {
+        if (!$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).ucfirst($this->method).'.xsd')) {
             throw new InvalidXmlException('The generated XML for the API is not valid against the XSD.');
         }   
     }
@@ -138,6 +145,25 @@ class Creator {
         }
 
         $this->type = strtolower($type);
+        return $this;
+    }
+
+    /**
+     * Set the method that is going to be used to call the API endpoint.
+     *
+     * @param string $method
+     * @return Creator
+     */
+    public function setMethod(string $method) : Creator
+    {
+        if (!in_array(strtolower($method), ['get', 'put', 'post'])) {
+            throw new InvalidArgumentException(sprintf(
+                'The specified request method "%s" is invalid.',
+                $method
+            ));
+        }
+
+        $this->method = strtolower($method);
         return $this;
     }
 }

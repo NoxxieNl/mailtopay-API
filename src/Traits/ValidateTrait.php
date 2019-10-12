@@ -27,6 +27,7 @@ trait ValidateTrait {
             return in_array($value, ['email', 'sms', 'letter']);
         });
 
+        // Custom invoice validation
         $this->validator->extend('invoices', function ($attribute, $value) {
             foreach ($value as $invoice) {
 
@@ -34,6 +35,21 @@ trait ValidateTrait {
                     $invoice['invoice_amount'],
                     $invoice['invoice_date'],
                     $invoice['invoice_description']
+                )) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        // Custom terms validation
+        $this->validator->extend('terms', function ($attribute, $value) {
+            foreach ($value as $invoice) {
+
+                if (!isset(
+                    $invoice['term_amount'],
+                    $invoice['due_date']
                 )) {
                     return false;
                 }

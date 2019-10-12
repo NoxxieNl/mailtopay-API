@@ -144,6 +144,7 @@ class Endpoint {
         $parameters = $this->addDefaultParameterDataToParameters();
         return $this->xmlCreator->addNodesFromArray($parameters)
                                 ->setType($this->endpoint)
+                                ->setMethod($this->method)
                                 ->getXml();
     }
 

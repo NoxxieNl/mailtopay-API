@@ -24,7 +24,7 @@ class CollectionOrders extends Endpoint implements EndpointContract {
 
     /**
      * Specify the valid parameters that are allowed to be used in this endpoint get method.
-     * Also define the validation rules for value of the parameter.
+     * Also define the validation rules for the value of the parameter.
      *
      * @return array
      */
@@ -38,6 +38,67 @@ class CollectionOrders extends Endpoint implements EndpointContract {
             'started_datetime_end' => 'date_format:Y-m-d',
             'status_datetime_start' => 'date_format:Y-m-d',
             'status_datetime_end' => 'date_format:Y-m-d',
+        ];
+    }
+
+    /**
+     * Specify the valid parameters that are allowed to be used in this endpoint post method.
+     * Also define the validation rules for the value of the parameter.
+     *
+     * @return array
+     */
+    protected function postValidParameters() : array
+    {
+        return [
+            'firstname' => 'required|string|min:0|max:50',
+            'lastname' => 'required|string|min:1|max:50',
+            'emailaddress1' => 'required|email:rfc',
+            'emailaddress2' => 'required|email:rfc',
+            'telephone1' => 'integer|digits:10',
+            'telephone2' => 'integer|digits:10',
+            'address_street' => 'string|min:0|max:75',
+            'address_number' => 'string|min:0|max:15',
+            'address_postcode' => 'string|min:0|max:10',
+            'address_city' => 'string|min:0|max:50',
+            'address_county' => 'string|min:0|max:50',
+            'address_street2' => 'string|min:0|max:75',
+            'address_number2' => 'string|min:0|max:15',
+            'address_postcode2' => 'string|min:0|max:10',
+            'address_city2' => 'string|min:0|max:50',
+            'address_county2' => 'string|min:0|max:50',
+            'debtornumber' => 'string|min:3|max:35',
+            'payment_reference' => 'string|min:0|max:35',
+            'concerning' => 'string|min:0|max:35',
+            'id_batch' => 'string|min:0|max:50',
+            'id_request_client' => 'string|min:0|max:50',
+            'birth_date' => 'date:Y-m-d',
+            'gender' => 'string:digits_between:0,1',
+            'language' => 'string|min:2|max:2',
+            'company_name' => 'string|min:0|max:50',
+            'flow_datetime' => 'date_format:Y-m-d\TH:i:s',
+            'flow_id' => 'integer|digits_between:100,999999',
+            'flow_step' => 'integer|digits_between:1,99',
+            'variable1' => 'string|min:0|max:100',
+            'variable2' => 'string|min:0|max:100',
+            'variable3' => 'string|min:0|max:100',
+            'variable4' => 'string|min:0|max:100',
+            'variable5' => 'string|min:0|max:100',
+            'username' => 'string|min:0|max:50',
+            'module_ideal' => 'integer:digits_between:0,1',
+            'module_mistercash' => 'integer:digits_between:0,1',
+            'module_paypal' => 'integer:digits_between:0,1',
+            'module_sofort' => 'integer:digits_between:0,1',
+            'module_creditcard' => 'integer:digits_between:0,1',
+            'module_paysafecard' => 'integer:digits_between:0,1',
+            'module_banktransfer' => 'integer:digits_between:0,1',
+            'module_emandate' => 'integer:digits_between:0,1',
+            'module_ubl' => 'integer:digits_between:0,1',
+            'invoices' => 'array|invoices',
+            'invoices.*.invoice_number' => 'required|string|min:1|max:50',
+            'invoices.*.invoice_date' => 'required|date_format:Y-m-d',
+            'invoices.*.invoice_description' => 'required|string|min:1|max:32',
+            'invoices.*.invoice_amount' => 'required|integer|digits_between:1,250000',
+            'invoices.*.invoice_due_date' => 'date_format:Y-m-d',
         ];
     }
 }
