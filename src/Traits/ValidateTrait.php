@@ -12,7 +12,7 @@ trait ValidateTrait {
      */
     protected function addValidationOptionsToValidatior() : void
     {
-        // Validate the status parameter
+        // Validate the status parameter.
         $this->validator->extend('status', function($attribute, $value) {
             foreach ($value as $status) {
                 if (!in_array($status, [101,300,500,700,701,702,703,704,900,902,998,999])) {
@@ -22,12 +22,12 @@ trait ValidateTrait {
             return true;
         });
 
-        // Specific for the "templates" endpoint validates the message_type parameter
+        // Specific for the "templates" endpoint validates the message_type parameter.
         $this->validator->extend('messagetype', function($attribute, $value) {
             return in_array($value, ['email', 'sms', 'letter']);
         });
 
-        // Custom invoice validation
+        // Custom invoice validation.
         $this->validator->extend('invoices', function ($attribute, $value) {
             foreach ($value as $invoice) {
 
@@ -43,7 +43,7 @@ trait ValidateTrait {
             return true;
         });
 
-        // Custom terms validation
+        // Custom terms validation.
         $this->validator->extend('terms', function ($attribute, $value) {
             foreach ($value as $invoice) {
 
@@ -56,6 +56,25 @@ trait ValidateTrait {
             }
 
             return true;
+        });
+
+        // Specific status validation for the message http put method.
+        $this->validator->extend('messageStatus', function ($attribute, $value) {
+            return in_array(strtolower($value), [
+                'paid',
+                'expired',
+                'withdrawn',
+                'expired_paymentplan',
+            ]);
+        });
+
+        // Specific status validation for the collectionorders http put method.
+        $this->validator->extend('collectionOrderStatus', function ($attribute, $value) {
+            return in_array(strtolower($value), [
+                'paid',
+                'cancel',
+                'withdraw',
+            ]);
         });
     }
 

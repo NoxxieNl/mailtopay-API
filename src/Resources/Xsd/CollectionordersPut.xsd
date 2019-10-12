@@ -1,0 +1,257 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="request">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="new_status" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="paid|cancel|withdraw"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_firstname" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="50"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_lastname" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="50"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_emailaddress1" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="254"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_emailaddress2" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="254"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_telephone1" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="20"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_telephone2" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="20"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_address_street" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="75"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_address_number" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="15"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_address_postcode" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="10"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_address_city" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="50"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_address_country" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="50"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_variable1" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_variable2" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_variable3" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_variable4" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_variable5" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="new_invoices" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="invoice" minOccurs="1" maxOccurs="25">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="invoice_number">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="50"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_description">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="50"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_amount">
+											<xs:simpleType>
+												<xs:restriction base="xs:long">
+													<xs:minInclusive value="-999999999"/>
+													<xs:maxInclusive value="999999999"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_date">
+											<xs:simpleType>
+												<xs:restriction base="xs:date">
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_date_due" minOccurs="0" maxOccurs="1">
+											<xs:simpleType>
+												<xs:union>
+													<xs:simpleType>
+														<xs:restriction base='xs:string'>
+															<xs:length value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+													<xs:simpleType>
+														<xs:restriction base="xs:date">
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:union>
+											</xs:simpleType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="update_invoices" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="invoice" minOccurs="1" maxOccurs="25">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="invoice_number">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="50"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_description">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="50"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_amount">
+											<xs:simpleType>
+												<xs:restriction base="xs:long">
+													<xs:minInclusive value="-999999999"/>
+													<xs:maxInclusive value="999999999"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_date">
+											<xs:simpleType>
+												<xs:restriction base="xs:date">
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="invoice_date_due" minOccurs="0" maxOccurs="1">
+											<xs:simpleType>
+												<xs:union>
+													<xs:simpleType>
+														<xs:restriction base='xs:string'>
+															<xs:length value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+													<xs:simpleType>
+														<xs:restriction base="xs:date">
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:union>
+											</xs:simpleType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

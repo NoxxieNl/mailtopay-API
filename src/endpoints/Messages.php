@@ -102,4 +102,25 @@ class Messages extends Endpoint implements EndpointContract {
             'terms.*.due_date' => 'date_format:Y-m-d'
         ];
     }
+
+    /**
+     * Specify the valid parameters that are allowed to be used in this endpoint put method.
+     * Also define the validation rules for the value of the parameter.
+     *
+     * @return array
+     */
+    protected function putValidParameters() : array
+    {
+        return [
+            'get' => [
+                'mpid' => 'integer',
+                'id_batch' => 'integer',
+                'debtor_name' => 'string',
+                'payment_reference' => 'string',
+            ],
+            'post' => [
+                'new_status' => 'messageStatus',
+            ],
+        ];
+    }
 }

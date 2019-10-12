@@ -1,0 +1,16 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:all>
+		<xs:element name="new_status" minOccurs="0" maxOccurs="1">
+		  <xs:simpleType>
+		    <xs:restriction base="xs:string">
+		      <xs:pattern value="paid|expired|withdrawn|expired_paymentplan"/>
+		    </xs:restriction>
+		  </xs:simpleType>
+		</xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

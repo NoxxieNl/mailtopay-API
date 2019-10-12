@@ -101,4 +101,52 @@ class CollectionOrders extends Endpoint implements EndpointContract {
             'invoices.*.invoice_due_date' => 'date_format:Y-m-d',
         ];
     }
+
+    /**
+     * Specify the valid parameters that are allowed to be used in this endpoint put method.
+     * Also define the validation rules for the value of the parameter.
+     *
+     * @return array
+     */
+    protected function putValidParameters() : array
+    {
+        return [
+            'get' => [
+                'cid' => 'integer',
+                'debtor_name' => 'string',
+                'payment_reference' => 'string',
+            ],
+            'post' => [
+                'new_status' => 'collectionOrderStatus',
+                'new_firstname' => 'string|min:0|max:50',
+                'new_lastname' => 'string|min:0|max:50',
+                'new_emailaddress1' => 'mail:rfc',
+                'new_emailaddress2' => 'mail:rfc',
+                'new_telephone1' => 'digits:10',
+                'new_telephone2' => 'digits:10',
+                'new_address_street' => 'string|min:0|max:75',
+                'new_address_number' => 'string|min:0|max:15',
+                'new_address_postcode' => 'string|min:0|max:10',
+                'new_address_city' => 'string|min:0|max:50',
+                'new_address_country' => 'string|min:0|max:2',
+                'new_variable1' => 'string|min:0|max:100',
+                'new_variable2' => 'string|min:0|max:100',
+                'new_variable3' => 'string|min:0|max:100',
+                'new_variable4' => 'string|min:0|max:100',
+                'new_variable5' => 'string|min:0|max:100',
+                'new_invoice' => 'array',
+                'new_invoice.*.invoice_number' => 'string|min:0|max:50',
+                'new_invoice.*.invoice_date' => 'date_format:Y-m-d',
+                'new_invoice.*.invoice_description' => 'string|min:0|max:32',
+                'new_invoice.*.invoice_amount' => 'digits_between:0,5000000',
+                'new_invoice.*.invoice_date_due' => 'date_format:Y-m-d',
+                'update_invoice' => 'array',
+                'update_invoice.*.invoice_number' => 'string|min:0|max:50',
+                'update_invoice.*.invoice_date' => 'date_format:Y-m-d',
+                'update_invoice.*.invoice_description' => 'string|min:0|max:32',
+                'update_invoice.*.invoice_amount' => 'digits_between:0,5000000',
+                'update_invoice.*.invoice_date_due' => 'date_format:Y-m-d',
+            ],
+        ];
+    }
 }
