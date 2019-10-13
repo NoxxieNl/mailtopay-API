@@ -1,7 +1,6 @@
 <?php
 namespace Noxxie\Mailtopay;
 
-use RuntimeException;
 use BadMethodCallException;
 use Noxxie\Mailtopay\Xml\Parser;
 use GuzzleHttp\Client as GuzzleHttp;
@@ -47,6 +46,13 @@ class Client implements ClientContract {
      * @var \Noxxie\Mailtopay\Xml\Parser
      */
     protected $xmlParser;
+
+    /**
+     * Contains the raw response instance.
+     *
+     * @var \Noxxie\Mailtopay\Contracts\Response
+     */
+    protected $response;
 
     /**
      * Constructor method.
@@ -126,20 +132,20 @@ class Client implements ClientContract {
             $endpointData['body'] = $this->endpoint->getParametersAsXml();
         }
         
-        $response = $this->restClient->request(
+        $this->response = $this->restClient->request(
             $this->endpoint->getMethod(),
             $this->endpoint->getEndpoint(),
             $endpointData
         );
 
-        if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
+        if ($this->response->getStatusCode() != 200 && $this->response->getStatusCode() != 201) {
             // When a 5xx http code is returned something is really wrong.
             // This allows the user to do something else when the server just doesn't respond.
-            if (substr($response->getStatusCode(), 0, 1) == 5) {
+            if (substr($this->response->getStatusCode(), 0, 1) == 5) {
                 throw new NoResponseException('The MailtoPay server did not response to the request.'); 
             } else {
                 $this->xmlParser->setType('error')
-                                ->execute((string) $response->getBody());
+                                ->execute((string) $this->response->getBody());
 
                 throw new ResponseException(
                     $this->xmlParser->getXml()->getElementsByTagName('description')->item(0)->nodeValue, 
@@ -149,8 +155,18 @@ class Client implements ClientContract {
         }
 
         $this->xmlParser->setType('response')
-                        ->execute((string) $response->getBody());
+                        ->execute((string) $this->response->getBody());
 
         return new Response($this->xmlParser->getXml());
+    }
+
+    /**
+     * Returns the raw response instance.
+     *
+     * @return Response
+     */
+    public function getResponse() : Response
+    {
+        return $this->response;
     }
 }
