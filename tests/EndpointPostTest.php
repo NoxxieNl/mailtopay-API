@@ -4,7 +4,7 @@ use Noxxie\Mailtopay\Endpoints\Sms;
 use Noxxie\Mailtopay\Exceptions\InvalidParameterException;
 use PHPUnit\Framework\TestCase;
 
-final class EndpointTest extends TestCase
+final class EndpointPostTest extends TestCase
 {
     public function setUp() : void
     {
