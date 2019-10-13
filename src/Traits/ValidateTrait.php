@@ -64,6 +64,7 @@ trait ValidateTrait {
             $validParameters = array_merge(...array_values($validParameters));
         }
 
+        
         if (!array_key_exists($parameter, $validParameters)) {
             throw new InvalidParameterException(sprintf(
                 'The specified parameter option %s is not valid for endpoint %s.',

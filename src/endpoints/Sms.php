@@ -31,9 +31,9 @@ class Sms extends Endpoint implements EndpointContract {
     protected function postValidParameters() : array
     {
         return [
-            'mobilenumber' => 'digits:10',
-            'sms_message' => 'string|min:1|max:1280',
-            'sms_datetime' => 'date_format:Y-m-d\TH:i:s',
+            'mobilenumber' => 'required|digits:10',
+            'sms_message' => 'required|string|min:1|max:1280',
+            'sms_datetime' => 'required|date_format:Y-m-d\TH:i:s',
         ];
     }
 }
