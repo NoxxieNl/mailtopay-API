@@ -36,4 +36,16 @@ class Templates extends Endpoint implements EndpointContract {
             'page' => 'integer|min:1|max:10000',
         ];
     }
+
+    /**
+     * Register custom validations for this specific endpoint.
+     *
+     * @return void
+     */
+    protected function registerCustomValidations() : void
+    {
+        $this->validator->extend('messagetype', function($attribute, $value) {
+            return in_array($value, ['email', 'sms', 'letter']);
+        });
+    }
 }

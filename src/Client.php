@@ -112,6 +112,9 @@ class Client implements ClientContract {
             throw new BadMethodCallException('No endpoint specified for execution');
         }
 
+        // Validate the endpoints required parameters
+        $this->endpoint->validate();
+
         $endpointData = [];
         
         if (in_array($this->endpoint->getMethod(), ['get', 'put'])) {
@@ -122,7 +125,7 @@ class Client implements ClientContract {
             $endpointData['content-type'] = 'text/xml; charset=UTF8';
             $endpointData['body'] = $this->endpoint->getParametersAsXml();
         }
-
+        
         $response = $this->restClient->request(
             $this->endpoint->getMethod(),
             $this->endpoint->getEndpoint(),

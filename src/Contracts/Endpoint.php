@@ -47,4 +47,11 @@ interface Endpoint {
      * @return array
      */
     public function getParameters() : array;
+
+    /**
+     * Validates all the setted parameters against the setted rules.
+     *
+     * @return void
+     */
+    public function validate() : void;
 }

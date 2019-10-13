@@ -22,11 +22,6 @@ trait ValidateTrait {
             return true;
         });
 
-        // Specific for the "templates" endpoint validates the message_type parameter.
-        $this->validator->extend('messagetype', function($attribute, $value) {
-            return in_array($value, ['email', 'sms', 'letter']);
-        });
-
         // Custom invoice validation.
         $this->validator->extend('invoices', function ($attribute, $value) {
             foreach ($value as $invoice) {
@@ -43,39 +38,10 @@ trait ValidateTrait {
             return true;
         });
 
-        // Custom terms validation.
-        $this->validator->extend('terms', function ($attribute, $value) {
-            foreach ($value as $invoice) {
-
-                if (!isset(
-                    $invoice['term_amount'],
-                    $invoice['due_date']
-                )) {
-                    return false;
-                }
-            }
-
-            return true;
-        });
-
-        // Specific status validation for the message http put method.
-        $this->validator->extend('messageStatus', function ($attribute, $value) {
-            return in_array(strtolower($value), [
-                'paid',
-                'expired',
-                'withdrawn',
-                'expired_paymentplan',
-            ]);
-        });
-
-        // Specific status validation for the collectionorders http put method.
-        $this->validator->extend('collectionOrderStatus', function ($attribute, $value) {
-            return in_array(strtolower($value), [
-                'paid',
-                'cancel',
-                'withdraw',
-            ]);
-        });
+        // Register custom validations for the specific endpoint if any defined.
+        if (method_exists($this, 'registerCustomValidations')) {
+            $this->registerCustomValidations();
+        }
     }
 
     /**
@@ -135,7 +101,10 @@ trait ValidateTrait {
 
                 foreach ($validParameters as $validParameterKey => $validParameter) {
                     if (strpos($validParameterKey, $parameter.'.*.') !== false) {
-                        $validationRules[$validParameterKey] = $validParameter;
+
+                        // Remove the present requirement for now cause we are validating the specific values of each parameter,
+                        // the present requirement will be checked when the method validate() is used.
+                        $validationRules[$validParameterKey] = str_replace(['|present', 'present|'], '', $validParameter);
                     }
                 }
             } else {
@@ -156,8 +125,46 @@ trait ValidateTrait {
                     'The specified parameter "%s" does not have a valid value.',
                     $parameter,
                     $arguments[0]
-                ));
+                ),
+                0,
+                $validation->errors());
             }
+        }
+    }
+
+    
+    /**
+     * Validates the enitre setted parameters at once,
+     * With this we can check for every requirement at once instead of checking each parameter by itself.
+     *
+     * @return void
+     */
+    public function validate() : void
+    {
+        if (! method_exists($this, $this->method.'ValidParameters')) {
+            return;
+        }
+
+        $rules = call_user_func_array([$this, $this->method.'ValidParameters'], []);
+
+        // The validation arary for put parameters is multi dimensional, flatten in it before checking it.
+        if ($this->method == 'put') {
+            $rules = array_merge(...array_values($rules));
+        }
+
+        $parameters = $this->addDefaultParameterDataToParameters();
+
+        $validation = $this->validator->make(
+            $parameters, 
+            $rules
+        );
+
+        if ($validation->fails()) {
+            throw new InvalidParameterException(
+                'Validation failed for the endpoint request.',
+                0,
+                $validation->errors()
+            );
         }
     }
 }
