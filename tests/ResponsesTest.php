@@ -12,7 +12,7 @@ use Noxxie\Mailtopay\Responses\Result;
 
 use function GuzzleHttp\Psr7\stream_for;
 
-final class EndpointParameterTest extends TestCase
+final class ResponsesTest extends TestCase
 {
     protected static $client;
 
