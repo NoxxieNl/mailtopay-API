@@ -1,7 +1,6 @@
 <?php
 
 use Noxxie\Mailtopay\Endpoints\Sms;
-use Noxxie\Mailtopay\Exceptions\InvalidParameterException;
 use PHPUnit\Framework\TestCase;
 
 final class EndpointPostTest extends TestCase
@@ -15,38 +14,38 @@ final class EndpointPostTest extends TestCase
         ];
     }
 
-    public function testThrowsExceptionOnInvalidParameterInConstructor() : void
+    public function testCanSetMethodAndParametersWithConstructor() : void
     {
-        $this->expectException(InvalidParameterException::class);
-        
-        New Sms('post', [
-            'invalid' => 'value'
-        ]);
+        $endpoint = New Sms('post', $this->parameters);
+        $this->assertSame($this->parameters, $endpoint->getParameters());
     }
 
-    public function testThrowsExceptionOnInvalidParameterInSetParameter() : void
+    public function testCanSetMethodAfterConstructor() : void
     {
-        $this->expectException(InvalidParameterException::class);
-        
-        $endpoint = New Sms('post');
-        $endpoint->setParameters( [
-            'invalid' => 'value'
-        ]);
+        $endpoint = new Sms;
+        $endpoint->setMethod('post');
+
+        $this->assertEquals('post', $endpoint->getMethod());
     }
 
-    public function testThrowsExceptionOnInvalidParameterInSetMethod() : void
+    public function testCanSetParametersAfterConstructor() : void
     {
-        $this->expectException(InvalidParameterException::class);
-        
-        $endpoint = New Sms('post');
-        $endpoint->setInvalid('value');
+        $endpoint = new Sms;
+        $endpoint->setMethod('post');
+        $endpoint->setParameters($this->parameters);
+
+        $this->assertSame($this->parameters, $endpoint->getParameters());
     }
 
-    public function testThrowsExceptionOnInvalidValue() : void
+    public function testCanSetEveryParameterBySetMethod() : void
     {
-        $this->expectException(InvalidParameterException::class);
-        
-        $endpoint = New Sms('post');
-        $endpoint->setSms_Message(0);
+        $endpoint = new Sms;
+        $endpoint->setMethod('post');
+
+        $endpoint->setMobilenumber('0612345678');
+        $endpoint->setSms_Message('dummy message');
+        $endpoint->setSms_Datetime('2019-10-13T17:14:00');
+
+        $this->assertSame($this->parameters, $endpoint->getParameters());
     }
 }
