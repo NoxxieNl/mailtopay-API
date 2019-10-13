@@ -41,4 +41,12 @@ final class EndpointTest extends TestCase
         $endpoint = New Sms('post');
         $endpoint->setInvalid('value');
     }
+
+    public function testThrowsExceptionOnInvalidValue() : void
+    {
+        $this->expectException(InvalidParameterException::class);
+        
+        $endpoint = New Sms('post');
+        $endpoint->setSms_Message(0);
+    }
 }
