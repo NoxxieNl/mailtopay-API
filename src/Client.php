@@ -7,8 +7,9 @@ use GuzzleHttp\Client as GuzzleHttp;
 use Noxxie\Mailtopay\Contracts\Endpoint;
 use Noxxie\Mailtopay\Responses\Response;
 use Noxxie\Mailtopay\Exceptions\ResponseException;
-use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
+use Noxxie\Mailtopay\Exceptions\NoResponseException;
 use Noxxie\Mailtopay\Contracts\Client as ClientContract;
+use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
 
 class Client implements ClientContract {
 

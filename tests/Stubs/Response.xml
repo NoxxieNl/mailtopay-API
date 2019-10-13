@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<response>
+	<meta>
+		<result_count>1</result_count>
+		<current_page>1</current_page>
+		<next_page/>
+	</meta>
+	<results>
+		<result>
+			<id_sms>12345</id_sms>
+		</result>
+	</results>
+</response>

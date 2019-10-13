@@ -105,12 +105,16 @@ class Creator {
     /**
      * Retrieves the generated XML as a string.
      *
+     * @param bool $validate
      * @return string
      */
-    public function getXml() : string
+    public function getXml(bool $validate = true) : string
     {
-        // Make sure we send a valid XML.
-        $this->validateXmlAgainstXsd();
+        // Make sure we send a valid XML if we want to.
+        if ($validate) {
+            $this->validateXmlAgainstXsd();
+        }
+
         return $this->xml->asXml();
     }
 
@@ -124,7 +128,7 @@ class Creator {
         $dom = new DOMDocument();
         $dom->loadXML($this->xml->asXml());
         
-        if (!$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).ucfirst($this->method).'.xsd')) {
+        if (!@$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).ucfirst($this->method).'.xsd')) {
             throw new InvalidXmlException('The generated XML for the API is not valid against the XSD.');
         }   
     }
