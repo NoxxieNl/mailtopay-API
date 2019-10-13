@@ -112,25 +112,22 @@ class Client implements ClientContract {
             throw new BadMethodCallException('No endpoint specified for execution');
         }
 
-        if ($this->endpoint->getMethod() == 'get') {
-            $response = $this->restClient->request(
-                $this->endpoint->getMethod(),
-                $this->endpoint->getEndpoint(), [
-                    'query' => $this->endpoint->getParameters(),
-                ]
-            );
+        $endpointData = [];
         
-        } elseif (in_array($this->endpoint->getMethod(), ['post', 'put'])) {
-            $response = $this->restClient->request(
-                $this->endpoint->getMethod(),
-                $this->endpoint->getEndpoint(), [
-                    'content-type' => 'text/xml; charset=UTF8',
-                    'body' => $this->endpoint->getParametersAsXml(),
-                ]
-            );
-        } else {
-            throw new RuntimeException('Unknown HTTP method specified for execution.');
+        if (in_array($this->endpoint->getMethod(), ['get', 'put'])) {
+            $endpointData['query'] = $this->endpoint->getParameters();
         }
+
+        if (in_array($this->endpoint->getMethod(), ['post', 'put'])) {
+            $endpointData['content-type'] = 'text/xml; charset=UTF8';
+            $endpointData['body'] = $this->endpoint->getParametersAsXml();
+        }
+
+        $response = $this->restClient->request(
+            $this->endpoint->getMethod(),
+            $this->endpoint->getEndpoint(),
+            $endpointData
+        );
 
         if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
             // When a 5xx http code is returned something is really wrong.

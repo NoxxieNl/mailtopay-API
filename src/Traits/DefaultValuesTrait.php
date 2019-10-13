@@ -49,7 +49,7 @@ trait DefaultValuesTrait {
         foreach (self::$defaultValues[$this->method] as $defaultParameterName) {
             
             // When the characters ".*." are found we must go in to a loop in order to check if every
-            // sub parameter is present, if not add those to the sub array.
+            // sub parameter is present, if not add those to the the sub array as parameter.
             if (strpos($defaultParameterName, '.*.') !== false) {
                 $substrOffset = strpos($defaultParameterName, '.*.');
                 $parameterArrayName = substr($defaultParameterName, 0, $substrOffset);

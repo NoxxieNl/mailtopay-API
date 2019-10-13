@@ -136,13 +136,49 @@ class Endpoint {
      */
     public function getParameters() : array
     {
+        // With the PUT http code we need to split out the GET and POST parameters. For this method we need
+        // to retrieve the "GET" part of the valid array.
+        if ($this->method == 'put') {
+            if (! method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['get'])) {
+                return [];
+            }
+
+            $parameters = [];
+            foreach ($this->putValidParameters()['get'] as $getParameterName => $getParameterValue) {
+                if (isset($this->parameters[$getParameterName])) {
+                    $parameters[$getParameterName] = $this->parameters[$getParameterName];
+                }
+            }
+
+            return $parameters;
+        }
+
         return $this->parameters;
     }
 
     public function getParametersAsXml() : string
     {
         $parameters = $this->addDefaultParameterDataToParameters();
-        return $this->xmlCreator->addNodesFromArray($parameters)
+
+        // With the PUT http code we need to split out the GET and POST parameters. For this method we need
+        // to retrieve the "POST" part of the valid array.
+        if ($this->method == 'put') {
+            if (! method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['post'])) {
+                $parameters = [];
+            } else {
+                $newParameters = [];
+                foreach ($this->putValidParameters()['post'] as $getParameterName => $getParameterValue) {
+                    if (isset($parameters[$getParameterName])) {
+                        $newParameters[$getParameterName] = $this->parameters[$getParameterName];
+                    }
+                }
+
+                $parameters = $newParameters;
+            }
+        }
+
+        return $this->xmlCreator->reset()
+                                ->addNodesFromArray($parameters)
                                 ->setType($this->endpoint)
                                 ->setMethod($this->method)
                                 ->getXml();

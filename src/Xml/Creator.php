@@ -42,7 +42,7 @@ class Creator {
      */
     public function __construct()
     {
-        $this->xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8" ?> <request/>');
+        $this->reset();
         $this->xsdLocation = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'Resources/Xsd';
     }
 
@@ -164,6 +164,17 @@ class Creator {
         }
 
         $this->method = strtolower($method);
+        return $this;
+    }
+
+    /**
+     * Resets the created XML back to normal.
+     *
+     * @return Creator
+     */
+    public function reset() : Creator
+    {
+        $this->xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8" ?> <request/>');
         return $this;
     }
 }

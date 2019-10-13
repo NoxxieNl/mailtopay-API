@@ -87,11 +87,16 @@ trait ValidateTrait {
     protected function hasValidParameter(string $parameter) : void
     {
 
-        if (!method_exists($this, $this->method.'ValidParameters')) {
+        if (! method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
 
         $validParameters = call_user_func_array([$this, $this->method.'ValidParameters'], []);
+
+        // The validation arary for put parameters is multi dimensional, flatten in it before checking it.
+        if ($this->method == 'put') {
+            $validParameters = array_merge(...array_values($validParameters));
+        }
 
         if (!array_key_exists($parameter, $validParameters)) {
             throw new InvalidParameterException(sprintf(
@@ -116,6 +121,11 @@ trait ValidateTrait {
         }
 
         $validParameters = call_user_func_array([$this, $this->method.'ValidParameters'], []);
+
+        // The validation arary for put parameters is multi dimensional, flatten in it before checking it.
+        if ($this->method == 'put') {
+            $validParameters = array_merge(...array_values($validParameters));
+        }
     
         if ($validParameters[$parameter] != '') {
             // When a array is specified we are going to search for additional validation rules
