@@ -31,6 +31,9 @@ Only the ID for the stored SMS will be returned from the API.
 
 ## Example
 ````php
+use Noxxie\Mailtopay\Endpoints\Sms;
+use Noxxie\Mailtopay\Client;
+
 $sms = new Sms;
 $sms	->setMobileNumber('0612345678')
 	->setSmsMessage('message')

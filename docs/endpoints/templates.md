@@ -31,6 +31,9 @@ Availible methods:
 
 ## Example
 ````php
+use Noxxie\Mailtopay\Endpoints\Templates;
+use Noxxie\Mailtopay\Client;
+
 $template = new Templates;
 $template->setMethod('get')
 	 ->setMessageType('sms');

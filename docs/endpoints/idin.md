@@ -105,10 +105,12 @@ $result->getIdinlink();
 
 The `mpid` is the unique identifier by what the API stored and executed the request. The `idinlink` contains the actuall HTTPS link that can be used to let the debtor authenticate with his/her bank.
 
-## Example
+## Examples
 
 ### Post
 ````php
+use Noxxie\Mailtopay\Endpoints\Idin;
+
 $idin = new Idin;
 $idin->setMethod('post')
 	->setLastname('lastname')
@@ -125,6 +127,8 @@ $response->getIdinlink();
 ### Get
 
 ````php
+use Noxxie\MailtoPay\Endpoints\Idin;
+use Noxxie\Mailtopay\Client;
 $idin = new Idin;
 $idin->setMethod('get')
 	->setStatusDate('2019-10-31')

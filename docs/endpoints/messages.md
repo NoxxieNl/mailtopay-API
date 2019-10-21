@@ -167,7 +167,10 @@ This will retrieve the amount of messages that are updated.
 
 ### Post
 ````php
-$mes = new Message;
+use Noxxie\Mailtopay\Endpoints\Messages;
+use Noxxie\Mailtopay\Client;
+
+$mes = new Messages;
 $mes->setMethod('post')
 	->setLastname('lastname')
 	->setDebtornumber('debornumber')
@@ -198,6 +201,9 @@ foreach ($response->getResults() as $result) {
 ### Get
 
 ````php
+use Noxxie\Mailtopay\Endpoints\Messages;
+use Noxxie\Mailtopay\Client;
+
 $message = new Messages;
 $message->setMethod('get')
 	->setStatusDate('2019-10-31')
@@ -219,6 +225,9 @@ if ($response->getResultsCount() > 0) {
 ### Put
 
 ````php
+use Noxxie\Mailtopay\Endpoints\Messages;
+use Noxxie\Mailtopay\Client;
+
 $message  =  new  Messages;
 $message->setMethod('put')
 	->setNewStatus('withdrawn')

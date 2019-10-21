@@ -100,6 +100,9 @@ The `mpid` is the unique identifier by what the API stored and executed the requ
 
 ### Post
 ````php
+use Noxxie\Mailtopay\Endpoints\Paylinks;
+use Noxxie\Mailtopay\Client;
+
 $pay = new Paylinks;
 $pay->setMethod('post')
 	->setConcerning('concerning')
@@ -124,6 +127,9 @@ $response->getPaylink();
 ### Get
 
 ````php
+use Noxxie\Mailtopay\Endpoints\Paylinks;
+use Noxxie\Mailtopay\Client;
+
 $paylink = new Paylinks;
 $paylink->setMethod('get')
 	->setStatusDate('2019-10-31')
