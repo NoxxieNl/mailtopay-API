@@ -155,7 +155,7 @@ class Client implements ClientContract {
             }
         }
 
-        $this->xmlParser->setType('response')
+        $this->xmlParser->setType(strtolower($this->endpoint->getEndpoint()) == 'idin' ? 'idinResponse ' : 'response')
                         ->execute((string) $this->response->getBody());
 
         return new Response($this->xmlParser->getXml());

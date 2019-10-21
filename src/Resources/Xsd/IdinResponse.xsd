@@ -1,0 +1,307 @@
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="response">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="meta">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="result_count">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:short">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="1000"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="current_page">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:short">
+                                        <xs:minInclusive value="1"/>
+                                        <xs:maxInclusive value="9999"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="next_page">
+                                <xs:simpleType>
+                                    <xs:union>
+                                        <xs:simpleType>
+                                            <xs:restriction base='xs:string'>
+                                                <xs:length value="0"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:short">
+                                                <xs:minInclusive value="1"/>
+                                                <xs:maxInclusive value="9999"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:union>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="results">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="result" maxOccurs="1000">
+                                <xs:complexType>
+                                    <xs:choice maxOccurs="unbounded">
+                                        <xs:element name="idinlink" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:anyURI">
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="mpid" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:union>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base='xs:string'>
+                                                            <xs:length value="0"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:long">
+                                                            <xs:minInclusive value="1000000000"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:union>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="id_request_client" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="50"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="status_code" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:short">
+                                                    <xs:minInclusive value="100"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="status_date" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:dateTime">
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="debtornumber" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="35"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="expired" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:short">
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="gender" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:union>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:byte">
+                                                            <xs:pattern value="0|1"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base='xs:string'>
+                                                            <xs:length value="0"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:union>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="legal_last_name" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="200"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="preferred_last_name" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="200"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="partner_last_name" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="200"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="legal_last_name_prefix" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="10"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="preferred_last_name_prefix" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="10"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="partner_last_name_prefix" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="10"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="initials" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="24"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="birth_date" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:union>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base='xs:string'>
+                                                            <xs:length value="0"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:date">
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:union>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="eighteen_or_older" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:union>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:byte">
+                                                            <xs:pattern value="0|1"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base='xs:string'>
+                                                            <xs:length value="0"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:union>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_street" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="50"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_number" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="5"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_number_addition" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="6"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_postcode" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="6"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_city" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="24"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_int_line1" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="70"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_int_line2" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="70"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_int_line3" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="70"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="address_country" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="2"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="telephone" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="20"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="emailaddress" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="0"/>
+                                                    <xs:maxLength value="255"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

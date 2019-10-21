@@ -112,7 +112,7 @@ The `mpid` is the unique identifier by what the API stored and executed the requ
 $idin = new Idin;
 $idin->setMethod('post')
 	->setLastname('lastname')
-	->setDebtornumber('debornumber')
+	->setDebtornumber('debtornumber')
 	->setDueDate('2019-10-22');
 
 $client = new Client('id', 'passphrase', 'base_uri', $idin);
@@ -135,7 +135,7 @@ $response = $client->execute();
 
 if ($response->getResultsCount() > 0) {
 	foreach ($response->getResults() as $result) {
-		// Retrieve initials
+		// Retrieve initials.
 		$response->getInitials() . "<br />";
 	}
 } else {

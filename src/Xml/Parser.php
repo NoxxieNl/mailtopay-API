@@ -63,9 +63,6 @@ Class Parser {
             throw new BadMethodCallException('The type of response is not defined, therefore the parser cannot run.');
         }
 
-        // Fix for the endpoint "idin", where the xml node "18_or_older" is invalid, replace it to "eighteen_or_older"
-        $xml = preg_replace('/<(\/)?(?:\d+)_or_older\>/m', '<$1eighteen_or_older>', $xml);
-
         $this->dom->loadXML($xml);
         $this->validateXmlAgainstXsd();
     }
@@ -88,7 +85,7 @@ Class Parser {
      */
     public function setType(string $type) : Parser
     {
-        if (!in_array(strtolower($type), ['error', 'response'])) {
+        if (!in_array(strtolower($type), ['error', 'response', 'idinResponse'])) {
             throw new InvalidArgumentException(sprintf(
                 'The specified reponse type "%s" is invalid.',
                 $type
