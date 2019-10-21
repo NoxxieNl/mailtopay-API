@@ -15,9 +15,9 @@ interface Endpoint {
      * Sets the used HTTP method for the specified endpoint.
      *
      * @param string $method
-     * @return void
+     * @return \Noxxie\Mailtopay\Contracts\Endpoint
      */
-    public function setMethod(string $method) : void;
+    public function setMethod(string $method) : Endpoint;
 
     /**
      * Sets the given parameters used get filterd data from the API.

@@ -113,7 +113,7 @@ class Messages extends Endpoint implements EndpointContract {
             'get' => [
                 'mpid' => 'integer',
                 'id_batch' => 'integer',
-                'debtor_name' => 'string',
+                'debtorname' => 'string',
                 'payment_reference' => 'string',
             ],
             'post' => [

@@ -3,16 +3,18 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use ReflectionClass;
 use RuntimeException;
+use SimpleXMLElement;
 use BadMethodCallException;
+use Illuminate\Support\Str;
+use Noxxie\Mailtopay\Xml\Creator;
 use Illuminate\Validation\Factory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Noxxie\Mailtopay\Traits\ValidateTrait;
-use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
 use Noxxie\Mailtopay\Traits\DefaultValuesTrait;
-use Noxxie\Mailtopay\Xml\Creator;
-use SimpleXMLElement;
+use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
+use Noxxie\Mailtopay\Contracts\Endpoint as ContractEndpoint;
 
 class Endpoint {
 
@@ -79,9 +81,9 @@ class Endpoint {
      * Sets a given HTTP method used to call the API.
      *
      * @param string $method
-     * @return void
+     * @return \Noxxie\Mailtopay\Endpoints\Endpoint
      */
-    public function setMethod(string $method) : void
+    public function setMethod(string $method) : ContractEndpoint
     {  
         if (!in_array(strtolower($method), $this->allowedMethods)) {
             throw new InvalidMethodException(sprintf(
@@ -92,6 +94,7 @@ class Endpoint {
         }
 
         $this->method = strtolower($method);
+        return $this;
     }
 
     /**
@@ -205,8 +208,9 @@ class Endpoint {
             throw new RuntimeException('HTTP Method is not yet defined for this endpoint');
         }
 
-        $parameter = strtolower(substr($method, 3, strlen($method) - 3));
-    
+        // Snake case the method name
+        $parameter = Str::snake(substr($method, 3, strlen($method) - 3));
+
         $this->hasValidParameter($parameter, $arguments);
         $this->hasValidaParameterData($parameter, $arguments);
         

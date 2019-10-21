@@ -49,16 +49,16 @@ class Idin extends Endpoint implements EndpointContract {
     protected function postValidParameters() : array
     {
         return [
-            'firstname' => 'string|min:1|max:50',
+            'firstname' => 'present|string|min:0|max:50',
             'lastname' => 'required|string|min:1|max:50',
             'debtornumber' => 'required|string|min:3|max:35',
-            'concerning' => 'string|min:0|max:50',
-            'id_batch' => 'string|min:0|max:50',
+            'concerning' => 'present|string|min:0|max:50',
+            'id_batch' => 'present|string|min:0|max:50',
             'id_request_client' => 'string|min:0|max:50',
-            'company_name' => 'required|string|min:0|max:50',
+            'company_name' => 'present|string|min:0|max:50',
             'username' => 'string|min:0|max:50',
             'due_date' => 'required|date_format:Y-m-d',
-            'return_url' => 'required|url',
+            'return_url' => 'present|url',
         ];
     }
 }

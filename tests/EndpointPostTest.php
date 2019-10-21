@@ -43,8 +43,8 @@ final class EndpointPostTest extends TestCase
         $endpoint->setMethod('post');
 
         $endpoint->setMobilenumber('0612345678');
-        $endpoint->setSms_Message('dummy message');
-        $endpoint->setSms_Datetime('2019-10-13T17:14:00');
+        $endpoint->setSmsMessage('dummy message');
+        $endpoint->setSmsDatetime('2019-10-13T17:14:00');
 
         $this->assertSame($this->parameters, $endpoint->getParameters());
     }

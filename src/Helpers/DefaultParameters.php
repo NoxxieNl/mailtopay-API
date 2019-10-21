@@ -55,4 +55,21 @@ class DefaultParameters {
             'invoices.*.invoice_date_due'
         ];
     }
+
+    /**
+     * The post array for the idin endpoint, the defined parameters are required in the XML,
+     * but may be left empty.
+     *
+     * @return array
+     */
+    public function postIdin() : array
+    {
+        return [
+            'firstname',
+            'concerning',
+            'id_batch',
+            'company_name',
+            'return_url'
+        ];
+    }
 }

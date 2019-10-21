@@ -50,14 +50,14 @@ class Paylinks extends Endpoint implements EndpointContract {
     protected function postValidParameters() : array
     {
         return [
-            'firstname' => 'required|string|min:0|max:50',
+            'firstname' => 'present|string|min:0|max:50',
             'lastname' => 'required|string|min:1|max:50',
             'debtornumber' => 'string|min:3|max:35',
-            'payment_reference' => 'string|min:0|max:35',
-            'concerning' => 'string|min:0|max:35',
-            'id_batch' => 'string|min:0|max:50',
+            'payment_reference' => 'present|string|min:0|max:35',
+            'concerning' => 'present|string|min:0|max:35',
+            'id_batch' => 'present|string|min:0|max:50',
             'id_request_client' => 'string|min:0|max:50',
-            'company_name' => 'string|min:0|max:50',
+            'company_name' => 'present|string|min:0|max:50',
             'username' => 'string|min:0|max:50',
             'module_ideal' => 'integer:between:0,1',
             'module_mistercash' => 'integer:between:0,1',
@@ -70,12 +70,12 @@ class Paylinks extends Endpoint implements EndpointContract {
             'module_ubl' => 'integer:between:0,1',
             'due_date' => 'required|date_format:Y-m-d',
             'return_url' => 'required|url',
-            'invoices' => 'array|invoices',
+            'invoices' => 'required|array|invoices',
             'invoices.*.invoice_number' => 'required|string|min:1|max:50',
             'invoices.*.invoice_date' => 'required|date_format:Y-m-d',
             'invoices.*.invoice_description' => 'required|string|min:1|max:32',
             'invoices.*.invoice_amount' => 'required|integer|between:1,250000',
-            'invoices.*.invoice_due_date' => 'date_format:Y-m-d'
+            'invoices.*.invoice_date_due' => 'present|date_format:Y-m-d'
         ];
     }
 }

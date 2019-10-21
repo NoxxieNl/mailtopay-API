@@ -130,7 +130,7 @@ class Creator {
         
         if (!@$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).ucfirst($this->method).'.xsd')) {
             throw new InvalidXmlException('The generated XML for the API is not valid against the XSD.');
-        }   
+        }
     }
 
     /**

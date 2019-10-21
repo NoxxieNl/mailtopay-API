@@ -13,7 +13,7 @@
                 <xs:element name="lastname">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
+                            <xs:minLength value="0"/>
                             <xs:maxLength value="50"/>
                         </xs:restriction>
                     </xs:simpleType>
