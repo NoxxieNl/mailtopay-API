@@ -1,6 +1,10 @@
 # Mailtopay-API
 
-This project aims into making the interface between the MailtoPay API and PHP easier to use.
+This package aims into making the interface between the MailtoPay API and PHP easier to use. This package can only be used with version 2 of the Mailtopay APi, version 1 is not supported and is deprecated by Mailtopay.
+
+More information regarding the Mailtopay API can be found on the Mailtopay [website](https://mailtopay.nl).
+
+**This project is in open beta, please report any bugs using the issue tracker.**
 
 ## Requirements
 
@@ -29,7 +33,7 @@ The `id`, `passphrase` and `base_uri` are provided information from Mailtopay.
 
 ## tests
 
-Running tests with `phpunit`:
+Running tests with `phpunit`
 ```
 .\vendor\bin\phpunit
 ```
@@ -40,7 +44,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **NoxxieNl** -  [NoxxieNl](https://noxxie.nl/)
+* NoxxieNl -  [Noxxie.nl](https://noxxie.nl/)
 
 ## License
 

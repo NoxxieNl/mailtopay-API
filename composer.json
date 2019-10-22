@@ -2,10 +2,10 @@
     "name": "noxxie/mailtopay-api",
     "type": "library",
     "description": "An PHP API interface for the Mailtopay API",
-    "license": "Proprietary",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Patrick Rennings",
+            "name": "Patrick",
             "email": "prennings@Noxxie.nl",
             "homepage": "https://Noxxie.nl/",
             "role": "Developer"
