@@ -32,6 +32,7 @@ class DefaultParameters {
             'terms.*.sms_datetime',
             'terms.*.letter_datetime',
             'terms.*.reminder_datetime',
+            'username',
         ];
     }
     
@@ -52,7 +53,7 @@ class DefaultParameters {
             'username',
             'return_url',
             'invoices.*.invoice_number',
-            'invoices.*.invoice_date_due'
+            'invoices.*.invoice_date_due',
         ];
     }
 
@@ -69,7 +70,33 @@ class DefaultParameters {
             'concerning',
             'id_batch',
             'company_name',
-            'return_url'
+            'return_url',
+        ];
+    }
+
+    /**
+     * The post array for the collectionorders endpoint, the defined parameters are required in the XML,
+     * but may be left empty.
+     *
+     * @return array
+     */
+    public function postCollectionOrders() : array
+    {
+        return [
+            'firstname',
+            'concerning',
+            'emailaddress1',
+            'emailaddress2',
+            'telephone1',
+            'telephone2',
+            'address_street',
+            'address_number',
+            'address_postcode',
+            'address_city',
+            'address_country',
+            'id_batch',
+            'return_url',
+            'invoice.*.invoice_date_due',
         ];
     }
 }
