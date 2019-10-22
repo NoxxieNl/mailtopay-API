@@ -1,14 +1,15 @@
 <?php
+
 namespace Noxxie\Mailtopay\Contracts;
 
 use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 
-interface Response {
-
+interface Response
+{
     /**
      * Gets the count of results that were retrieved from the API.
      *
-     * @return integer
+     * @return int
      */
     public function getResultsCount() : int;
 
@@ -25,5 +26,4 @@ interface Response {
      * @return Metadata
      */
     public function getMetadata() : MetadataContract;
-    
 }

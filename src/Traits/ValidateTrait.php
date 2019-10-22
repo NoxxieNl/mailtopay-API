@@ -1,10 +1,12 @@
 <?php
+
 namespace Noxxie\Mailtopay\Traits;
 
-use ReflectionClass;
 use Noxxie\Mailtopay\Exceptions\InvalidParameterException;
+use ReflectionClass;
 
-trait ValidateTrait {
+trait ValidateTrait
+{
     /**
      * Add specific validation options to the validator instance.
      *
@@ -13,19 +15,19 @@ trait ValidateTrait {
     protected function addValidationOptionsToValidatior() : void
     {
         // Validate the status parameter.
-        $this->validator->extend('status', function($attribute, $value) {
+        $this->validator->extend('status', function ($attribute, $value) {
             foreach ($value as $status) {
-                if (!in_array($status, [101,300,500,700,701,702,703,704,900,902,998,999])) {
+                if (!in_array($status, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
                     return false;
                 }
-            };
+            }
+
             return true;
         });
 
         // Custom invoice validation.
         $this->validator->extend('invoices', function ($attribute, $value) {
             foreach ($value as $invoice) {
-
                 if (!isset(
                     $invoice['invoice_amount'],
                     $invoice['invoice_date'],
@@ -48,12 +50,12 @@ trait ValidateTrait {
      * Check if a given parameter is valid for the specified HTTP method.
      *
      * @param string $parameter
+     *
      * @return void
      */
     protected function hasValidParameter(string $parameter) : void
     {
-
-        if (! method_exists($this, $this->method.'ValidParameters')) {
+        if (!method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
 
@@ -64,7 +66,6 @@ trait ValidateTrait {
             $validParameters = array_merge(...array_values($validParameters));
         }
 
-        
         if (!array_key_exists($parameter, $validParameters)) {
             throw new InvalidParameterException(sprintf(
                 'The specified parameter option %s is not valid for endpoint %s.',
@@ -75,15 +76,16 @@ trait ValidateTrait {
     }
 
     /**
-     * Check if the specified parameter data has 
+     * Check if the specified parameter data has.
      *
      * @param string $parameter
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return void
      */
     protected function hasValidaParameterData(string $parameter, array $arguments) : void
     {
-        if (! method_exists($this, $this->method.'ValidParameters')) {
+        if (!method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
 
@@ -93,7 +95,7 @@ trait ValidateTrait {
         if ($this->method == 'put') {
             $validParameters = array_merge(...array_values($validParameters));
         }
-    
+
         if ($validParameters[$parameter] != '') {
             // When a array is specified we are going to search for additional validation rules
             // for the data inside this array.
@@ -111,13 +113,13 @@ trait ValidateTrait {
             } else {
                 // Single validation for a specific parameter.
                 $validationRules = [
-                    $parameter => $validParameters[$parameter]
+                    $parameter => $validParameters[$parameter],
                 ];
             }
 
             $validation = $this->validator->make([
-                    $parameter => $arguments[0]
-                ], 
+                    $parameter => $arguments[0],
+                ],
                 $validationRules
             );
 
@@ -133,7 +135,6 @@ trait ValidateTrait {
         }
     }
 
-    
     /**
      * Validates the enitre setted parameters at once,
      * With this we can check for every requirement at once instead of checking each parameter by itself.
@@ -142,7 +143,7 @@ trait ValidateTrait {
      */
     public function validate() : void
     {
-        if (! method_exists($this, $this->method.'ValidParameters')) {
+        if (!method_exists($this, $this->method.'ValidParameters')) {
             return;
         }
 
@@ -156,7 +157,7 @@ trait ValidateTrait {
         $parameters = $this->addDefaultParameterDataToParameters();
 
         $validation = $this->validator->make(
-            $parameters, 
+            $parameters,
             $rules
         );
 

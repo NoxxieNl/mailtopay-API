@@ -1,13 +1,14 @@
 <?php
+
 namespace Noxxie\Mailtopay\Xml;
 
-use DOMDocument;
 use BadMethodCallException;
+use DOMDocument;
 use InvalidArgumentException;
 use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
 
-Class Parser {
-
+class Parser
+{
     /**
      * Contains the loaded DOMDocument instance.
      *
@@ -37,11 +38,11 @@ Class Parser {
      */
     public function __construct(?string $xml = null, ?string $type = null)
     {
-        $this->dom = New DOMDocument();
+        $this->dom = new DOMDocument();
         $this->dom->preserveWhiteSpace = false;
 
         $this->xsdLocation = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'Resources/Xsd';
-        
+
         if (!is_null($type)) {
             $this->setType($type);
         }
@@ -55,6 +56,7 @@ Class Parser {
      * Loads te given XML string and validates it against a XSD.
      *
      * @param string|null $xml
+     *
      * @return void
      */
     public function execute(?string $xml = null) : void
@@ -81,9 +83,10 @@ Class Parser {
      * Sets the specific response type.
      *
      * @param string $type
+     *
      * @return \Noxxie\Mailtopay\Xml\Parser
      */
-    public function setType(string $type) : Parser
+    public function setType(string $type) : self
     {
         if (!in_array(strtolower($type), ['error', 'response', 'idinResponse'])) {
             throw new InvalidArgumentException(sprintf(
@@ -93,6 +96,7 @@ Class Parser {
         }
 
         $this->type = strtolower($type);
+
         return $this;
     }
 
@@ -105,6 +109,6 @@ Class Parser {
     {
         if (!@$this->dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).'.xsd')) {
             throw new InvalidXmlException('The response XML from the API is not valid against the XSD.');
-        } 
+        }
     }
 }

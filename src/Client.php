@@ -1,18 +1,19 @@
 <?php
+
 namespace Noxxie\Mailtopay;
 
 use BadMethodCallException;
-use Noxxie\Mailtopay\Xml\Parser;
 use GuzzleHttp\Client as GuzzleHttp;
-use Noxxie\Mailtopay\Contracts\Endpoint;
-use Noxxie\Mailtopay\Responses\Response;
-use Noxxie\Mailtopay\Exceptions\ResponseException;
-use Noxxie\Mailtopay\Exceptions\NoResponseException;
 use Noxxie\Mailtopay\Contracts\Client as ClientContract;
+use Noxxie\Mailtopay\Contracts\Endpoint;
 use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
+use Noxxie\Mailtopay\Exceptions\NoResponseException;
+use Noxxie\Mailtopay\Exceptions\ResponseException;
+use Noxxie\Mailtopay\Responses\Response;
+use Noxxie\Mailtopay\Xml\Parser;
 
-class Client implements ClientContract {
-
+class Client implements ClientContract
+{
     /**
      * Contains the username for auhtentication.
      *
@@ -58,9 +59,9 @@ class Client implements ClientContract {
     /**
      * Constructor method.
      *
-     * @param string $username
-     * @param string $password
-     * @param string $baseUri
+     * @param string        $username
+     * @param string        $password
+     * @param string        $baseUri
      * @param Endpoint|null $endpoint
      */
     public function __construct(string $username, string $password, string $baseUri, ?Endpoint $endpoint = null)
@@ -75,12 +76,12 @@ class Client implements ClientContract {
 
         // We know this is tightly coupled to the guzzle package.
         $this->setRestClient(new GuzzleHttp([
-            'base_uri' => $baseUri,
+            'base_uri'    => $baseUri,
             'http_errors' => false,
-            'auth' => [
+            'auth'        => [
                 $this->username,
-                $this->password
-            ]
+                $this->password,
+            ],
         ]));
     }
 
@@ -88,11 +89,13 @@ class Client implements ClientContract {
      * Sets the endpoint we are going to use. (Base uri is emitted).
      *
      * @param Endpoint $endpoint
+     *
      * @return \Noxxie\Mailtopay\Contracts\Client
      */
     public function setEndpoint(Endpoint $endpoint) : ClientContract
     {
         $this->endpoint = $endpoint;
+
         return $this;
     }
 
@@ -100,11 +103,13 @@ class Client implements ClientContract {
      * Sets the HTTP client instance.
      *
      * @param GuzzleHTTP $restClient
+     *
      * @return \Noxxie\Mailtopay\Contracts\Client
      */
     public function setRestClient(GuzzleHTTP $restClient) : ClientContract
     {
         $this->restClient = $restClient;
+
         return $this;
     }
 
@@ -123,7 +128,7 @@ class Client implements ClientContract {
         $this->endpoint->validate();
 
         $endpointData = [];
-        
+
         if (in_array($this->endpoint->getMethod(), ['get', 'put'])) {
             $endpointData['query'] = $this->endpoint->getParameters();
         }
@@ -132,7 +137,7 @@ class Client implements ClientContract {
             $endpointData['content-type'] = 'text/xml; charset=UTF8';
             $endpointData['body'] = $this->endpoint->getParametersAsXml();
         }
-        
+
         $this->response = $this->restClient->request(
             $this->endpoint->getMethod(),
             $this->endpoint->getEndpoint(),
@@ -143,13 +148,13 @@ class Client implements ClientContract {
             // When a 5xx http code is returned something is really wrong.
             // This allows the user to do something else when the server just doesn't respond.
             if (substr($this->response->getStatusCode(), 0, 1) == 5) {
-                throw new NoResponseException('The MailtoPay server did not response to the request.'); 
+                throw new NoResponseException('The MailtoPay server did not response to the request.');
             } else {
                 $this->xmlParser->setType('error')
                                 ->execute((string) $this->response->getBody());
 
                 throw new ResponseException(
-                    $this->xmlParser->getXml()->getElementsByTagName('description')->item(0)->nodeValue, 
+                    $this->xmlParser->getXml()->getElementsByTagName('description')->item(0)->nodeValue,
                     $this->xmlParser->getXml()->getElementsByTagName('errorcode')->item(0)->nodeValue
                 );
             }

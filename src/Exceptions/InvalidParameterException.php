@@ -1,23 +1,24 @@
 <?php
+
 namespace Noxxie\Mailtopay\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Support\MessageBag;
 
-class InvalidParameterException extends Exception {
-
+class InvalidParameterException extends Exception
+{
     /**
-     * Contains the message bag instance
+     * Contains the message bag instance.
      *
      * @var \Illuminate\Contracts\Support\MessageBag|null
      */
     protected $messageBag;
-    
+
     /**
      * Constructor method.
      *
-     * @param string $message
-     * @param integer $code
+     * @param string          $message
+     * @param int             $code
      * @param MessageBag|null $messageBag
      */
     public function __construct(string $message = '', $code = 0, ?MessageBag $messageBag = null)
@@ -39,7 +40,7 @@ class InvalidParameterException extends Exception {
     /**
      * Returns if the given exception has a errorbag.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMessageBag() : bool
     {

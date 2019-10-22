@@ -1,23 +1,23 @@
 <?php
+
 namespace Noxxie\Mailtopay\Endpoints;
 
-use ReflectionClass;
-use RuntimeException;
-use SimpleXMLElement;
 use BadMethodCallException;
-use Illuminate\Support\Str;
-use Noxxie\Mailtopay\Xml\Creator;
-use Illuminate\Validation\Factory;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
-use Noxxie\Mailtopay\Traits\ValidateTrait;
-use Noxxie\Mailtopay\Traits\DefaultValuesTrait;
-use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
+use Illuminate\Validation\Factory;
 use Noxxie\Mailtopay\Contracts\Endpoint as ContractEndpoint;
+use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
+use Noxxie\Mailtopay\Traits\DefaultValuesTrait;
+use Noxxie\Mailtopay\Traits\ValidateTrait;
+use Noxxie\Mailtopay\Xml\Creator;
+use ReflectionClass;
+use RuntimeException;
 
-class Endpoint {
-
+class Endpoint
+{
     use ValidateTrait, DefaultValuesTrait;
 
     /**
@@ -56,10 +56,10 @@ class Endpoint {
     protected $xmlCreator;
 
     /**
-     * Constructor method
+     * Constructor method.
      *
      * @param string|null $method
-     * @param array|null $parameters
+     * @param array|null  $parameters
      */
     public function __construct(?string $method = null, ?array $parameters = null)
     {
@@ -81,10 +81,11 @@ class Endpoint {
      * Sets a given HTTP method used to call the API.
      *
      * @param string $method
+     *
      * @return \Noxxie\Mailtopay\Endpoints\Endpoint
      */
     public function setMethod(string $method) : ContractEndpoint
-    {  
+    {
         if (!in_array(strtolower($method), $this->allowedMethods)) {
             throw new InvalidMethodException(sprintf(
                 'The specified method %s is not valid for the endpoint %s.',
@@ -94,6 +95,7 @@ class Endpoint {
         }
 
         $this->method = strtolower($method);
+
         return $this;
     }
 
@@ -102,13 +104,14 @@ class Endpoint {
      * to the correct setter method in order to validate it.
      *
      * @param array $parameters
+     *
      * @return void
      */
     public function setParameters(array $parameters) : void
     {
         foreach ($parameters as $parameter => $value) {
             $methodName = 'set'.strtolower($parameter);
-            call_user_func_array([$this,$methodName], [$value]);
+            call_user_func_array([$this, $methodName], [$value]);
         }
     }
 
@@ -142,7 +145,7 @@ class Endpoint {
         // With the PUT http code we need to split out the GET and POST parameters. For this method we need
         // to retrieve the "GET" part of the valid array.
         if ($this->method == 'put') {
-            if (! method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['get'])) {
+            if (!method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['get'])) {
                 return [];
             }
 
@@ -166,7 +169,7 @@ class Endpoint {
         // With the PUT http code we need to split out the GET and POST parameters. For this method we need
         // to retrieve the "POST" part of the valid array.
         if ($this->method == 'put') {
-            if (! method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['post'])) {
+            if (!method_exists($this, 'putValidParameters') || !isset($this->putValidParameters()['post'])) {
                 $parameters = [];
             } else {
                 $newParameters = [];
@@ -191,10 +194,11 @@ class Endpoint {
      * Magic call method allows us to dynamicly declare the set methods we want with the needed validation.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return \Noxxie\Mailtopay\Contracts\Endpoint
      */
-    public function __call(string $method, array $arguments) : Endpoint
+    public function __call(string $method, array $arguments) : self
     {
         if (strtolower(substr($method, 0, 3)) != 'set') {
             throw new BadMethodCallException(sprintf(
@@ -213,8 +217,9 @@ class Endpoint {
 
         $this->hasValidParameter($parameter, $arguments);
         $this->hasValidaParameterData($parameter, $arguments);
-        
+
         $this->parameters[$parameter] = $arguments[0];
+
         return $this;
     }
 }

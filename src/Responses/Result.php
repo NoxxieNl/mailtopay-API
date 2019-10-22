@@ -1,13 +1,13 @@
 <?php
+
 namespace Noxxie\Mailtopay\Responses;
 
+use BadMethodCallException;
 use DOMElement;
 use ReflectionClass;
-use BadMethodCallException;
-use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
 
-class Result {
-
+class Result
+{
     /**
      * Constructor method.
      *
@@ -25,7 +25,8 @@ class Result {
      * Also every get call will be checked here and data will be returned if the property is set.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      */
     public function __call(string $method, array $arguments)
@@ -38,14 +39,15 @@ class Result {
             ));
         }
 
-        if (strtolower(substr($method, 0, 3)) == 'set') {       
+        if (strtolower(substr($method, 0, 3)) == 'set') {
             $property = strtolower($arguments[0]);
             $this->$property = $arguments[1];
+
             return $this;
         } else {
             $property = $this->snake(substr($method, 3, strlen($method) - 3));
-            
-            if (! property_exists($this, $property)) {
+
+            if (!property_exists($this, $property)) {
                 throw new BadMethodCallException(sprintf(
                     'Call to undefined method %s::%s()',
                     (new ReflectionClass($this))->getShortName(),
@@ -61,11 +63,12 @@ class Result {
      * Convert a string to snake case.
      *
      * @param string $value
+     *
      * @return string
      */
     protected function snake($value) : string
     {
-        if (! ctype_lower($value)) {
+        if (!ctype_lower($value)) {
             $value = preg_replace('/\s+/u', '', ucwords($value));
             $value = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1'.'_', $value));
         }

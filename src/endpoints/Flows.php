@@ -1,18 +1,18 @@
 <?php
+
 namespace Noxxie\Mailtopay\Endpoints;
 
-use Noxxie\Mailtopay\Endpoints\Endpoint;
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
-class Flows extends Endpoint implements EndpointContract {
-
+class Flows extends Endpoint implements EndpointContract
+{
     /**
      * Specifies the allowed HTTP methods that can be used.
      *
      * @var array
      */
     protected $allowedMethods = [
-        'get'
+        'get',
     ];
 
     /**
@@ -31,7 +31,7 @@ class Flows extends Endpoint implements EndpointContract {
     protected function getValidParameters() : array
     {
         return [
-            'id_flow' => 'integer',
+            'id_flow'    => 'integer',
             'showssteps' => 'integer|min:1|max:1',
         ];
     }

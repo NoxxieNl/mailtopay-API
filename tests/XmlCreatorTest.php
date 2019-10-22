@@ -1,12 +1,11 @@
 <?php
 
 use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
-use PHPUnit\Framework\TestCase;
 use Noxxie\Mailtopay\Xml\Creator;
+use PHPUnit\Framework\TestCase;
 
 final class XmlCreatorTest extends TestCase
 {
-
     public function setUp() : void
     {
         $this->creator = new Creator();
@@ -21,14 +20,14 @@ final class XmlCreatorTest extends TestCase
     public function testCanAddNodesFromArray(): void
     {
         $array = [
-                'test' => 'test',
-                'test2' => 'test2'
-            ]; 
+                'test'  => 'test',
+                'test2' => 'test2',
+            ];
 
         $this->creator->addNodesFromArray($array);
         $this->assertEquals(
             '<?xml version="1.0" encoding="utf-8"?>'."\n".
-            '<request><test>test</test><test2>test2</test2></request>'."\n", 
+            '<request><test>test</test><test2>test2</test2></request>'."\n",
             $this->creator->getXml(false)
         );
     }
@@ -36,9 +35,9 @@ final class XmlCreatorTest extends TestCase
     public function testCanAddNodesWithChildNodesToXml(): void
     {
         $array = [[
-                'test' => 'test',
-                'test2' => 'test2'
-            ]]; 
+                'test'  => 'test',
+                'test2' => 'test2',
+            ]];
 
         $this->creator->addChildNodeWithNodesFromArray('dummies', $array);
         $this->assertEquals(file_get_contents('tests/Stubs/AddNodeFromArrayXml.xml'), $this->creator->getXml(false));

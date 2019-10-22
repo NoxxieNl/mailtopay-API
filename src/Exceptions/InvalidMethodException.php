@@ -1,8 +1,9 @@
 <?php
+
 namespace Noxxie\Mailtopay\Exceptions;
 
 use Exception;
 
-class InvalidMethodException extends Exception {
-    
+class InvalidMethodException extends Exception
+{
 }
