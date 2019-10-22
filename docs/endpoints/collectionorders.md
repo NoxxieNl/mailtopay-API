@@ -9,7 +9,6 @@ The `post`, `get`  and `put` methods are availible  for this  endpoint.  With th
 
 ## Request
 
-
 ### Get
 
 For the get method filters can be applied to get the status of a specific collectionorder or multiple collectionorders. To be sure you always get a unique collectionorder **always** use the `setCid()` method. The filtering used with other methods can have multiple results.
