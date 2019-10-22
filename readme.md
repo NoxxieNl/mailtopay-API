@@ -31,6 +31,12 @@ $response = $client->execute();
 
 The `id`, `passphrase` and `base_uri` are provided information from Mailtopay.
 
+### Validation
+
+This package aims to validate any provided data as much as possible in order to give back invalid that where possible before the request is send to the API. When a invalid parameter is set a `InvalidParameterException` exception will be thrown.
+
+However it is always possible that you enter some wierd combination of data that this package does not validate for. The API also does a validation check and when a error rises from the API an error response is returned. You can pick those up with the `ResponseException` exception.
+
 ## tests
 
 Running tests with `phpunit`
@@ -40,7 +46,7 @@ Running tests with `phpunit`
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
