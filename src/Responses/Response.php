@@ -1,15 +1,15 @@
 <?php
+
 namespace Noxxie\Mailtopay\Responses;
 
-use DOMDocument;
-use ReflectionClass;
 use BadMethodCallException;
-use Noxxie\Mailtopay\Responses\Metadata;
+use DOMDocument;
 use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
+use ReflectionClass;
 
-class Response implements ResponseContract {
-
+class Response implements ResponseContract
+{
     /**
      * Contains the DOM instance.
      *
@@ -67,7 +67,7 @@ class Response implements ResponseContract {
     /**
      * Returns the amount of results retrieved API client.
      *
-     * @return integer
+     * @return int
      */
     public function getResultsCount() : int
     {
@@ -101,7 +101,8 @@ class Response implements ResponseContract {
      * get methods. When mulitple results are retrieved this will return the data for the first retrieved result.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      */
     public function __call(string $method, array $arguments)
@@ -112,9 +113,10 @@ class Response implements ResponseContract {
                 (new ReflectionClass($this))->getShortName(),
                 $method
             ));
-        } 
-        
+        }
+
         $resultInstance = $this->getResults()[0];
+
         return call_user_func_array([$resultInstance, $method], $arguments);
     }
 }

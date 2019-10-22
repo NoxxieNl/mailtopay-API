@@ -1,16 +1,17 @@
 <?php
+
 namespace Noxxie\Mailtopay\Xml;
 
 use DOMDocument;
-use SimpleXMLElement;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Noxxie\Mailtopay\Exceptions\InvalidXmlException;
+use SimpleXMLElement;
 
-class Creator {
-
+class Creator
+{
     /**
-     * Contains the main xml element
+     * Contains the main xml element.
      *
      * @var \SimpleXMLElement
      */
@@ -51,11 +52,13 @@ class Creator {
      *
      * @param string $name
      * @param string $value
+     *
      * @return Creator
      */
-    public function addNode(string $name, string $value) : Creator
+    public function addNode(string $name, string $value) : self
     {
         $this->xml->addChild($name, $value);
+
         return $this;
     }
 
@@ -63,12 +66,12 @@ class Creator {
      * Add nodes from the specified array.
      *
      * @param array $parameters
+     *
      * @return Creator
      */
-    public function addNodesFromArray(array $parameters) : Creator
+    public function addNodesFromArray(array $parameters) : self
     {
         foreach ($parameters as $name => $value) {
-
             if (is_array($value)) {
                 $this->addChildNodeWithNodesFromArray($name, $value);
                 continue;
@@ -84,13 +87,14 @@ class Creator {
      * Adds a child node, with child nodes in it.
      *
      * @param string $name
-     * @param array $nodes
+     * @param array  $nodes
+     *
      * @return Creator
      */
-    public function addChildNodeWithNodesFromArray(string $name, array $nodes) : Creator
+    public function addChildNodeWithNodesFromArray(string $name, array $nodes) : self
     {
         $parentNode = $this->xml->addChild($name);
-        
+
         foreach ($nodes as $child) {
             $childNode = $parentNode->addChild(Str::singular($name));
 
@@ -106,6 +110,7 @@ class Creator {
      * Retrieves the generated XML as a string.
      *
      * @param bool $validate
+     *
      * @return string
      */
     public function getXml(bool $validate = true) : string
@@ -127,7 +132,7 @@ class Creator {
     {
         $dom = new DOMDocument();
         $dom->loadXML($this->xml->asXml());
-        
+
         if (!@$dom->schemaValidate($this->xsdLocation.DIRECTORY_SEPARATOR.ucfirst($this->type).ucfirst($this->method).'.xsd')) {
             throw new InvalidXmlException('The generated XML for the API is not valid against the XSD.');
         }
@@ -137,9 +142,10 @@ class Creator {
      * Sets the specific response type.
      *
      * @param string $type
+     *
      * @return \Noxxie\Mailtopay\Xml\Creator
      */
-    public function setType(string $type) : Creator
+    public function setType(string $type) : self
     {
         if (!in_array(strtolower($type), ['sms', 'paylinks', 'messages', 'collectionorders', 'idin'])) {
             throw new InvalidArgumentException(sprintf(
@@ -149,6 +155,7 @@ class Creator {
         }
 
         $this->type = strtolower($type);
+
         return $this;
     }
 
@@ -156,9 +163,10 @@ class Creator {
      * Set the method that is going to be used to call the API endpoint.
      *
      * @param string $method
+     *
      * @return Creator
      */
-    public function setMethod(string $method) : Creator
+    public function setMethod(string $method) : self
     {
         if (!in_array(strtolower($method), ['get', 'put', 'post'])) {
             throw new InvalidArgumentException(sprintf(
@@ -168,6 +176,7 @@ class Creator {
         }
 
         $this->method = strtolower($method);
+
         return $this;
     }
 
@@ -176,9 +185,10 @@ class Creator {
      *
      * @return Creator
      */
-    public function reset() : Creator
+    public function reset() : self
     {
         $this->xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8" ?> <request/>');
+
         return $this;
     }
 }

@@ -1,18 +1,18 @@
 <?php
+
 namespace Noxxie\Mailtopay\Endpoints;
 
-use Noxxie\Mailtopay\Endpoints\Endpoint;
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
-class Sms extends Endpoint implements EndpointContract {
-
+class Sms extends Endpoint implements EndpointContract
+{
     /**
      * Specifies the allowed HTTP methods that can be used.
      *
      * @var array
      */
     protected $allowedMethods = [
-        'post'
+        'post',
     ];
 
     /**
@@ -32,7 +32,7 @@ class Sms extends Endpoint implements EndpointContract {
     {
         return [
             'mobilenumber' => 'required|digits:10',
-            'sms_message' => 'required|string|min:1|max:1280',
+            'sms_message'  => 'required|string|min:1|max:1280',
             'sms_datetime' => 'required|date_format:Y-m-d\TH:i:s',
         ];
     }

@@ -1,15 +1,15 @@
 <?php
 
 use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Handler\MockHandler;
+use function GuzzleHttp\Psr7\stream_for;
 use Noxxie\Mailtopay\Client;
 use Noxxie\Mailtopay\Endpoints\Messages;
 use Noxxie\Mailtopay\Exceptions\NoResponseException;
 use Noxxie\Mailtopay\Exceptions\ResponseException;
-use function GuzzleHttp\Psr7\stream_for;
+use PHPUnit\Framework\TestCase;
 
 final class BadResponsesTest extends TestCase
 {
@@ -26,8 +26,8 @@ final class BadResponsesTest extends TestCase
         $handler = HandlerStack::create($mock);
         self::$client = new Client('dummpy', 'dummy', 'dummy_base_url');
         self::$client->setRestClient(new GuzzleHttpClient([
-            'handler' => $handler,
-            'http_errors' => false
+            'handler'     => $handler,
+            'http_errors' => false,
         ]));
     }
 

@@ -9,20 +9,20 @@ final class EndpointPostTest extends TestCase
     {
         $this->parameters = [
             'mobilenumber' => '0612345678',
-            'sms_message' => 'dummy message',
+            'sms_message'  => 'dummy message',
             'sms_datetime' => '2019-10-13T17:14:00',
         ];
     }
 
     public function testCanSetMethodAndParametersWithConstructor() : void
     {
-        $endpoint = New Sms('post', $this->parameters);
+        $endpoint = new Sms('post', $this->parameters);
         $this->assertSame($this->parameters, $endpoint->getParameters());
     }
 
     public function testCanSetMethodAfterConstructor() : void
     {
-        $endpoint = new Sms;
+        $endpoint = new Sms();
         $endpoint->setMethod('post');
 
         $this->assertEquals('post', $endpoint->getMethod());
@@ -30,7 +30,7 @@ final class EndpointPostTest extends TestCase
 
     public function testCanSetParametersAfterConstructor() : void
     {
-        $endpoint = new Sms;
+        $endpoint = new Sms();
         $endpoint->setMethod('post');
         $endpoint->setParameters($this->parameters);
 
@@ -39,7 +39,7 @@ final class EndpointPostTest extends TestCase
 
     public function testCanSetEveryParameterBySetMethod() : void
     {
-        $endpoint = new Sms;
+        $endpoint = new Sms();
         $endpoint->setMethod('post');
 
         $endpoint->setMobilenumber('0612345678');

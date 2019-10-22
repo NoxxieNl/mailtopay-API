@@ -1,29 +1,30 @@
 <?php
+
 namespace Noxxie\Mailtopay\Responses;
 
-use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 use DOMDocument;
+use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 
-class Metadata implements MetadataContract {
-
+class Metadata implements MetadataContract
+{
     /**
      * Holds the result count metadata attribute.
      *
-     * @var integer
+     * @var int
      */
     protected $resultCount = 0;
 
     /**
      * Holds the current page metadata attribute.
      *
-     * @var integer
+     * @var int
      */
     protected $currentPage = 0;
 
     /**
      * Holds the metadata next page attribute.
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $nextPage = null;
 
@@ -47,7 +48,7 @@ class Metadata implements MetadataContract {
     /**
      * Retrieves the result count metadata attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getResultCount() : int
     {
@@ -57,7 +58,7 @@ class Metadata implements MetadataContract {
     /**
      * Retrieves the current pages metadata attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getCurrentPage() : int
     {
@@ -67,7 +68,7 @@ class Metadata implements MetadataContract {
     /**
      * Retrieves the next page metadata attribute.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getNextPage() : ?int
     {
@@ -77,7 +78,7 @@ class Metadata implements MetadataContract {
     /**
      * Gives back if the response contains more pages.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMorePages() : bool
     {

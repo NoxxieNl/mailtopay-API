@@ -1,13 +1,14 @@
 <?php
+
 namespace Noxxie\Mailtopay\Contracts;
 
-interface Endpoint {
-
+interface Endpoint
+{
     /**
      * Constructor method.
      *
      * @param string|null $method
-     * @param array|null $parameters
+     * @param array|null  $parameters
      */
     public function __construct(?string $method = null, ?array $parameters = null);
 
@@ -15,14 +16,16 @@ interface Endpoint {
      * Sets the used HTTP method for the specified endpoint.
      *
      * @param string $method
+     *
      * @return \Noxxie\Mailtopay\Contracts\Endpoint
      */
-    public function setMethod(string $method) : Endpoint;
+    public function setMethod(string $method) : self;
 
     /**
      * Sets the given parameters used get filterd data from the API.
      *
      * @param array $parameters
+     *
      * @return void
      */
     public function setParameters(array $parameters) : void;

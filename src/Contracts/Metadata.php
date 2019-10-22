@@ -1,12 +1,13 @@
 <?php
+
 namespace Noxxie\Mailtopay\Contracts;
 
-interface Metadata {
-
+interface Metadata
+{
     /**
      * Retrieves if there are any more pages that can be retrieved from the API response.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMorePages() : bool;
 
@@ -23,5 +24,4 @@ interface Metadata {
      * @return int|null
      */
     public function getNextpage() : ?int;
-    
 }

@@ -1,8 +1,9 @@
 <?php
+
 namespace Noxxie\Mailtopay\Helpers;
 
-class DefaultParameters {
-
+class DefaultParameters
+{
     /**
      * The post array for the messages endpoint, the defined parameters are required in the XML,
      * but may be left empty.
@@ -35,7 +36,7 @@ class DefaultParameters {
             'username',
         ];
     }
-    
+
     /**
      * The post array for the paylinks endpoint, the defined parameters are required in the XML,
      * but may be left empty.
