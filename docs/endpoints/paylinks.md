@@ -4,7 +4,7 @@ With the paylinks endpoint you can create a new paylink in order to use it in an
 
 ## HTTP methods  
 
-The `post` and `get` methods are availible  for this  endpoint. Where the `post` method is used to create a new paylink and the `get` method is used for retrieving the status of a specific or multiple paylinks.
+The `post` and `get` methods are available for this endpoint. Where the `post` method is used to create a new paylink and the `get` method is used for retrieving the status of a specific or multiple paylinks.
 
 ## Request
 
@@ -12,7 +12,7 @@ The `post` and `get` methods are availible  for this  endpoint. Where the `post`
 
 For the get method filters can be applied to get the status of a specific paylink or multiple paylinks. To be sure you always get a unique paylink **always** use the `setMpid()` method. The filtering used with other methods can have multiple results.
 
-The following methods are availible:
+The following methods are available:
 
 ````php
 $paylink->setMpid()
@@ -36,7 +36,7 @@ $paylink->setMpid()
 
 ### Post
 
-The post method is used to create a new paylink. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
+The `post` method is used to create a new paylink. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
 
 ````php
 Endpoint::registerDefaultValues('post',  DefaultParameters::postPaylinks());
@@ -44,7 +44,7 @@ Endpoint::registerDefaultValues('post',  DefaultParameters::postPaylinks());
 
 This will register all the parameters that are optional but must be specified in order to get the endpoint to work.  When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postPaylinks()` with your own array. (Beware  the correct parameter names must be specified in order to get it work, no validation what so ever is done when setting the default values).
 
-Below are the absolute minimum methods that must be used in order to get a correct request to the API. Additional methods can be specified in order to get more configuration then see XXX on how these set methods work (when you use the `defaultParameters` register method.
+Below are the absolute minimum methods that must be used in order to get a correct request to the API. Ofcourse you can specify extra parameter values if you want. You can view every settable parameter in the official Mailtopay API documentation.
 
 ````php
 $pay = new Paylinks;
@@ -72,7 +72,7 @@ The default `metadata` response methods are availible for this request and can b
 
 ### Get
 
-Availible methods for an `get 
+Available methods for an `get` response.
 ````php
 $result->getMpid();
 $result->getIdRequestClient();
@@ -88,7 +88,7 @@ The status of the paylink determines what is filled and what is not filled. A ge
 
 ### Post
 
-Availible methods for an `post` reponse are:
+Available methods for an `post` reponse are:
 ````php
 $result->getMpid();
 $result->getPaylink();

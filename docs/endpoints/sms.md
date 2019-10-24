@@ -4,14 +4,14 @@ With the sms endpoint you can send a sms to the specified number, you can either
 
 ## HTTP methods  
 
-The `post` method is the only allowed method for this  endpoint.
+The `post` method is the only allowed method for this endpoint.
 
 ## Request
 
-The following methods are availible for setting filters for this request:
+The following methods are available for setting filters for this request:
 
 ````php
-$sms	->setMobileNumber('0612345678')
+$sms->setMobileNumber('0612345678')
 	->setSmsMessage('message')
 	->setSmsDatatime('2019-10-21T12:00:00');
 ````
@@ -20,9 +20,9 @@ The `setSmsMessage` must be between 1 and 1280 characters. And ofcourse the `set
 
 ## Response
 
-The default `metadata` response methods are availible for this request and can be used for getting extra information regarding the response.
+The default `metadata` response methods are available for this request and can be used for getting extra information regarding the response.
 
-Availible methods:
+Available methods:
 ````php
 $result->getIdSms();
 ````

@@ -1,22 +1,22 @@
 
 # Messages
 
-With the messages endpoint you can create a new mesage with the API. The messages endpoint provides the possibility to create a flow for a settlement when a specific term must be payed and on what dates the debtor must reciever either an `sms`, `email` or `letter`.  You can also specify a `reminder` (wich is send by SMS) when its almost the due date.
+With the messages endpoint you can create a new mesage with the API. The messages endpoint provides the possibility to create a settlement when a specific term must be payed and on what dates the debtor must reciever either an `sms`, `email` or `letter`.  You can also specify a `reminder` (wich is send by SMS) when its almost the due date.
 
 ## HTTP methods  
 
-The `post`, `get`  and `put` methods are availible  for this  endpoint. Where the `post` method is used to create a new message, the `get` method is used for retrieving the status of a specific or multiple messages and the `put` method to update an existing message or messages.
+The `post`, `get`  and `put` methods are available  for this  endpoint. Where the `post` method is used to create a new message, the `get` method is used for retrieving the status of a specific or multiple messages and the `put` method to update an existing message or messages.
 
 ## Request
 
 ### GET
 
-For the get method filters can be applied to get the status of a specific paylink or multiple paylinks. To be sure you always get a unique paylink **always** use the `setMpid()` method. The filtering used with other methods can have multiple results.
+For the `get` method filters can be applied to get the status of a specific or multiple messages. To be sure you always get a unique message **always** use the `setMpid()` method. The filtering used with other methods can have multiple results.
 
-The following methods are availible:
+The following methods are available:
 
 ````php
-$paylink->setMpid()
+$message->setMpid()
 	->setStatusDate()
 	->setStatus()
 	->setIdBatch()
@@ -41,15 +41,15 @@ You can apply as much filters as you want and combine as much as you want. Bewar
 
 ### Post
 
-The post method is used to create a new message. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
+The `post` method is used to create a new message. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
 
 ````php
 Endpoint::registerDefaultValues('post',  DefaultParameters::postMessages());
 ````
 
-This will register all the parameters that are optional but must be specified in order to get the endpoint to work.  When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postMessages()` with your own array. (Beware  the correct parameter names must be specified in order to get it work, no validation what so ever is done when setting the default values).
+This will register all the parameters that are optional but must be specified in order to get the endpoint to work. When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postMessages()` with your own array. (Beware  the correct parameter names must be specified in order to get it work, no validation what so ever is done when setting the default values).
 
-Below are the absolute minimum methods that must be used in order to get a correct request to the API. Additional methods can be specified in order to get more configuration then see XXX on how these set methods work (when you use the `defaultParameters` register method).
+Below are the absolute minimum methods that must be used in order to get a correct request to the API. Ofcourse you can specify extra parameter values if you want. You can view every settable parameter in the official Mailtopay API documentation.
 
 ````php
 $mes = new Messages;
@@ -86,7 +86,7 @@ $mes->setAddressPostcode();
 $mes->setAddressCity();
 ````
 
-This are required in combination when setting the options for each `term`. In your term array when u use `sms_datetime` OR `reminder_datetime` the `setMobilenumber()` is required. When you use `email_datetime` the `setEmailaddress()` is required and when you use the `letter_datetime` the `setAddressX()` are required (ALL of them).
+These are required in combination when setting the options for each `term`. In your term array, when u use `sms_datetime` OR `reminder_datetime` the `setMobilenumber()` is required. When you use `email_datetime` the `setEmailaddress()` is required and when you use the `letter_datetime` the `setAddressX()` are required (ALL of them).
 
 Additional when you specify any of the `*_datetime` parameters in your `term` the corresponding `set*Template()` becomes required:
 
@@ -101,13 +101,13 @@ The value of setters for the templates must be an existing ID of the correspondi
 
 Afcourse you can combine multiple communication channels, but remember for each communication channel something new becomes required.
 
-Some additional methods are `setIdBatch()`, `setCompanyName()`, `setPaymentReference()`, `setModuleIdeal()`, `setModuleCreditCard()`, `setVariable1()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every availible parameter.
+Some additional methods are `setIdBatch()`, `setCompanyName()`, `setPaymentReference()`, `setModuleIdeal()`, `setModuleCreditCard()`, `setVariable1()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every available parameter.
 
 ### Put
 
-With the put method you can update an existing message or message in order to change it status. In order to do so you must set filters for what messages the new status must be applied on and the status it must be changed to.
+With the `put` method you can update an existing message or message in order to change it status. In order to do so you must set filters for what messages the new status must be applied on and the status it must be changed to.
 
-The availible filters:
+The available filters:
 ````php
 $mes->setMpid();
 $mes->setIdBatch();
@@ -130,7 +130,7 @@ The default `metadata` response methods are availible for this request and can b
 
 ### Get
 
-Availible methods for an `get 
+Available methods for an `get 
 ````php
 $result->getMpid();
 $result->getIdRequestClient();
@@ -142,11 +142,11 @@ $result->getIban();
 $result->getBic();
 ````
 
-The status of the paylink determines what is filled and what is not filled. A general rule can be, when it is payed `provider`, `account_owner`, `iban` and `bic` are filled otherwise they are empty.
+The status of the message determines what is filled and what is not filled. A general rule can be, when it is payed `provider`, `account_owner`, `iban` and `bic` are filled otherwise they are empty.
 
 ### Post
 
-Availible methods for an `post` reponse are:
+Available methods for an `post` reponse are:
 ````php
 $result->getMpid();
 $result->getTerm();
@@ -156,7 +156,7 @@ The `mpid` is the unique identifier by what the API stored and executed the requ
 
 ### Put
 
-Availible methods for an `put` response are:
+Available methods for an `put` response are:
 ````php
 $result->getUpdated();
 ````

@@ -1,22 +1,22 @@
 
 # IDIN
 
-With the IDIN endpoint you can create a login for the debtor in order to retrieve information of the debtor, this is done by creating a idin request to the specific bank and were the debtor must login the endpoint returns the information about the debtor that logged in.
+The IDIN endpoints allows you to give the any given person the opportunity to authenticate themself using there own bank. You can look at IDIN the same way as any person would do when they are doing a payment tru iDeal, but instead of paying for something they are authentication against your website. The returned information can be used to make sure the person is indeed the person he/she claims to be.
 
 ## HTTP methods  
 
-The `post` and `get` methods are availible  for this  endpoint. Where the `post` method is used to create a new idin request and the `get` method is used for retrieving the status of a specific IDIN login or multiple logins.
+The `post` and `get` methods are available for this  endpoint. Where the `post` method is used to create a new idin request and the `get` method is used for retrieving the status of a specific or multiple IDIN requests.
 
 ## Request
 
 ### GET
 
-For the get method filters can be applied to get the status of a specific paylink or multiple paylinks. To be sure you always get a unique idin **always** use the `setMpid()` method. The filtering used with other methods can have multiple results.
+For the `get` method filters can be applied to get the status of a specific or multiple IDIN requests. To be sure you always get a unique IDIN **always** use the `setMpid()` method. The filtering used with other methods can have multiple results.
 
-The following methods are availible:
+The following methods are available:
 
 ````php
-$paylink->setMpid()
+$idin->setMpid()
 	->setStatusDate()
 	->setStatus()
 	->setIdBatch()
@@ -35,15 +35,15 @@ $paylink->setMpid()
 
 ### Post
 
-The post method is used to create a new idin link. The post endpoints can have some parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
+The `post` method is used to create a new IDIN link. The `post` endpoints can have parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
 
 ````php
 Endpoint::registerDefaultValues('post',  DefaultParameters::postIdin());
 ````
 
-This will register all the parameters that are optional but must be specified in order to get the endpoint to work.  When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postIdin()` with your own array. (Beware  the correct parameter names must be specified in order to get it work, no validation what so ever is done when setting the default values).
+This will register all the parameters that are optional but must be specified in order to get the endpoint to work.  When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postIdin()` with your own array. (Beware  the correct parameter names must be specified in order to get it to work, no validation what so ever is done when setting the default values).
 
-Below are the absolute minimum methods that must be used in order to get a correct request to the API. Additional methods can be specified in order to get more configuration then see XXX on how these set methods work (when you use the `defaultParameters` register method).
+Below are the absolute minimum methods that must be used in order to get a correct request to the API. Ofcourse you can specify extra parameter values if you want. You can view every settable parameter in the official Mailtopay API documentation.
 
 ````php
 $idin = new Idin;
@@ -53,15 +53,15 @@ $idin->setMethod('post')
 	->setDueDate('2019-10-22');
 ````
 
-Some additional methods are `setFirstname()`, `setConcerning()`, `setCompanyName()`, `setReturnUrl()`, `setUsername()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every availible parameter.
+Some additional methods are `setFirstname()`, `setConcerning()`, `setCompanyName()`, `setReturnUrl()`, `setUsername()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every available parameter.
 
 ## Response
 
-The default `metadata` response methods are availible for this request and can be used for getting extra information regarding the response.
+The default `metadata` response methods are available for this request and can be used for getting extra information regarding the response.
 
 ### Get
 
-Availible methods for an `get` request:
+available methods for an `get` request:
 ````php
 $result->getMpid();
 $result->getIdRequestClient();
@@ -93,11 +93,11 @@ $result->getTelephone();
 $result->getEmailaddress();
 ````
 
-The information is only filled when the response with `getStatusCode` is `902`.
+The information is only filled when the response with `getStatusCode()` is `902`.
 
 ### Post
 
-Availible methods for an `post` reponse are:
+available methods for an `post` reponse are:
 ````php
 $result->getMpid();
 $result->getIdinlink();
@@ -110,6 +110,7 @@ The `mpid` is the unique identifier by what the API stored and executed the requ
 ### Post
 ````php
 use Noxxie\Mailtopay\Endpoints\Idin;
+use Noxxie\Mailtopay\Client;
 
 $idin = new Idin;
 $idin->setMethod('post')
@@ -129,6 +130,7 @@ $response->getIdinlink();
 ````php
 use Noxxie\MailtoPay\Endpoints\Idin;
 use Noxxie\Mailtopay\Client;
+
 $idin = new Idin;
 $idin->setMethod('get')
 	->setStatusDate('2019-10-31')

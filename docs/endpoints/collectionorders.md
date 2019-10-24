@@ -5,24 +5,24 @@ With the collectionorders endpoint, You can activate a flow for the specified in
 
 ## HTTP methods  
 
-The `post`, `get`  and `put` methods are availible  for this  endpoint.  With the `get` method you can retrieve the status of a certian or multiple collectionorders, with the `post` method you can create a new collectionorder and with the `put` method you can update an existing collectionorder.
+The `post`, `get`  and `put` methods are available  for this  endpoint.  With the `get` method you can retrieve the status of a specific or multiple collectionorders, with the `post` method you can create a new collectionorder and with the `put` method you can update an existing collectionorder.
 
 ## Request
 
 ### Get
 
-For the get method filters can be applied to get the status of a specific collectionorder or multiple collectionorders. To be sure you always get a unique collectionorder **always** use the `setCid()` method. The filtering used with other methods can have multiple results.
+For the `get` method filters can be applied to get the status of a specific collectionorder or multiple collectionorders. To be sure you always get a unique collectionorder **always** use the `setCid()` method. The filtering done with other methods can have multiple results.
 
 The following methods are availible:
 
 ````php
-$co	->setCid()
-	->setRrp()
-	->setPage()
-	->setStartedDatetimeStart()
-	->setStartedDatetimeEnd()
-	->setStatusDatetimeStart()
-	->setStatusDatetimeEnd()
+setCid()
+setRrp()
+setPage()
+setStartedDatetimeStart()
+setStartedDatetimeEnd()
+setStatusDatetimeStart()
+setStatusDatetimeEnd()
 ````
 
 | Method | Description |
@@ -37,7 +37,7 @@ $co	->setCid()
 
 ### Post
 
-The post method is used to create a new collectionorder. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
+The `post` method is used to create a new collectionorder. The post endpoints can have allot of parameters were some are required and some are optional. In order to not have to set every parameter that is required to be present in the request but can be empty you can use the helper method:
 
 ````php
 Endpoint::registerDefaultValues('post',  DefaultParameters::postCollectionOrders());
@@ -45,7 +45,7 @@ Endpoint::registerDefaultValues('post',  DefaultParameters::postCollectionOrders
 
 This will register all the parameters that are optional but must be specified in order to get the endpoint to work.  When you want you can also specify your own default parameter values. Just replace `DefaultParameters::postCollectionOrders()` with your own array. (Beware  the correct parameter names must be specified in order to get it work, no validation what so ever is done when setting the default values).
 
-Below are the absolute minimum methods that must be used in order to get a correct request to the API. Additional methods can be specified in order to get more configuration then see XXX on how these set methods work (when you use the `defaultParameters` register method.
+Below are the absolute minimum methods that must be used in order to get a correct request to the API. Ofcourse you can specify extra parameter values if you want. You can view every settable parameter in the official Mailtopay API documentation.
 
 ````php
 $co = new CollectionOrders;
@@ -68,11 +68,11 @@ $co->setMethod('post')
 
 **Beware** when you use the `setInvoices` option and you only use one invoice a multidimensional array must be used in order to make it work. (array in array :-)).
 
-Some additional methods are `setIdBatch()`, `setCompanyName()`, `setPaymentReference()`, `setModuleIdeal()`, `setModuleCreditCard()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every availible parameter.
+Some additional methods are `setIdBatch()`, `setCompanyName()`, `setPaymentReference()`, `setModuleIdeal()`, `setModuleCreditCard()`. For every parameter there is a set method defined. See the API documentation of Mailtopay itself for every available parameter.
 
 ### Put
 
-With the put method you can update an existing collectionorders or collectionorder with updated information regarding the invoice, add new invoices or update / delete existing information regarding the collectionorder.
+With the `put` method you can update an existing collectionorders with updated or new information.
 
 The availible filters:
 ````php
@@ -81,7 +81,7 @@ $co->setDebtorname();
 $co->setPaymentReference();
 ````
 
-And for updating information the following methods are availible:
+And for updating information the following methods are available:
 ````php
 $co->setNewStatus();
 $co->setNewFirstname();
@@ -133,7 +133,7 @@ $co->setNewInvoice([
 
 ## Response
 
-The default `metadata` response methods are availible for this request and can be used for getting extra information regarding the response.
+The default `metadata` response methods are available for this request and can be used for getting extra information regarding the response.
 
 ### Post
 
