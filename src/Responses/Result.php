@@ -16,6 +16,15 @@ class Result
     public function __construct(DOMElement $result)
     {
         foreach ($result->childNodes as $child) {
+
+            // Specific for the flows endpoint.
+            if ($child->nodeName == 'steps') {
+                foreach ($child->getElementsByTagName('result') as $node) {
+                    $this->steps[] = new Result($node);
+                }
+                continue;
+            }
+            
             call_user_func_array([$this, 'set'.ucfirst($child->nodeName)], [$child->nodeName, $child->nodeValue]);
         }
     }
