@@ -39,7 +39,7 @@ class Messages extends Endpoint implements EndpointContract
             'payment_reference' => 'string',
             'rrp'               => 'integer|min:10|max:1000',
             'page'              => 'integer|min:1|max:10000',
-            'detail'            => 'integer|min:1|max:1',
+            'details'            => 'integer|min:1|max:1',
         ];
     }
 
