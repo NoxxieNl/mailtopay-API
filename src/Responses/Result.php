@@ -20,11 +20,11 @@ class Result
             // Specific for the flows endpoint.
             if ($child->nodeName == 'steps') {
                 foreach ($child->getElementsByTagName('result') as $node) {
-                    $this->steps[] = new Result($node);
+                    $this->steps[] = new self($node);
                 }
                 continue;
             }
-            
+
             call_user_func_array([$this, 'set'.ucfirst($child->nodeName)], [$child->nodeName, $child->nodeValue]);
         }
     }

@@ -32,7 +32,7 @@ class Flows extends Endpoint implements EndpointContract
     {
         return [
             'id_flow'    => 'integer',
-            'showsteps' => 'integer|min:1|max:1',
+            'showsteps'  => 'integer|min:1|max:1',
         ];
     }
 }
