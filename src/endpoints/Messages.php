@@ -31,14 +31,14 @@ class Messages extends Endpoint implements EndpointContract
     protected function getValidParameters() : array
     {
         return [
-            'mpid'              => 'integer',
-            'status_date'       => 'date_format:Y-m-d',
-            'status'            => 'array|status',
-            'id_batch'          => 'integer',
-            'debtor_name'       => 'string',
-            'payment_reference' => 'string',
-            'rrp'               => 'integer|min:10|max:1000',
-            'page'              => 'integer|min:1|max:10000',
+            'mpid'               => 'integer',
+            'status_date'        => 'date_format:Y-m-d',
+            'status'             => 'array|status',
+            'id_batch'           => 'integer',
+            'debtor_name'        => 'string',
+            'payment_reference'  => 'string',
+            'rrp'                => 'integer|min:10|max:1000',
+            'page'               => 'integer|min:1|max:10000',
             'details'            => 'integer|min:1|max:1',
         ];
     }
