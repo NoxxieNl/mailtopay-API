@@ -4,6 +4,35 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
+/**
+ * @method Paylinks setStatus(array $statusses)
+ * @method Paylinks setMpid(int $integer)
+ * @method Paylinks setConcerning(string $concerning)
+ * @method Paylinks setLastname(string $lastname)
+ * @method Paylinks setDebtornumber(string $debtornumber)
+ * @method Paylinks setUsername(string $username)
+ * @method Paylinks setInvoices(array $invoices)
+ * @method Paylinks setReturnUrl(string $url)
+ * @method Paylinks setStatusDate(string $date)
+ * @method Paylinks setFirstname(string $name)
+ * @method Paylinks setPaymentReference(string $reference)
+ * @method Paylinks setIdBatch(string $id)
+ * @method Paylinks setIdRequestClient(string $id)
+ * @method Paylinks setCompanyName(string $name)
+ * @method Paylinks setModuleIdeal(int $integer)
+ * @method Paylinks setModuleMisterCash(int $integer)
+ * @method Paylinks setModulePaypal(int $integer)
+ * @method Paylinks setModuleSofort(int $integer)
+ * @method Paylinks setModuleCreditcard(int $integer)
+ * @method Paylinks setModulePaysafecard(int $integer)
+ * @method Paylinks setModuleBanktransfer(int $integer)
+ * @method Paylinks setModuleEmandate(int $integer)
+ * @method Paylinks setModuleUbl(int $integer)
+ * @method Paylinks setDueDate(string $date)
+ * @method Paylinks setRpp(int $integer)
+ * @method Paylinks setPage(int $integer)
+ * @method Paylinks setDetail(int $integer)
+ */
 class PayLinks extends Endpoint implements EndpointContract
 {
     /**

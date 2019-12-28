@@ -4,6 +4,10 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
+/**
+ * @method Flows setIdFlow(integer $id)
+ * @method Flows setShowsteps(int $integer)
+ */
 class Flows extends Endpoint implements EndpointContract
 {
     /**

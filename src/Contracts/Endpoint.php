@@ -2,6 +2,8 @@
 
 namespace Noxxie\Mailtopay\Contracts;
 
+use Noxxie\Mailtopay\Endpoints\Endpoint as EndpointsEndpoint;
+
 interface Endpoint
 {
     /**
@@ -17,9 +19,9 @@ interface Endpoint
      *
      * @param string $method
      *
-     * @return \Noxxie\Mailtopay\Contracts\Endpoint
+     * @return \Noxxie\Mailtopay\Endpoint
      */
-    public function setMethod(string $method) : self;
+    public function setMethod(string $method) : EndpointsEndpoint;
 
     /**
      * Sets the given parameters used get filterd data from the API.

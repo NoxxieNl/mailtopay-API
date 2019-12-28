@@ -4,6 +4,23 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
+/**
+ * @method Idin setMpid(integer $id)
+ * @method Idin setStatusDate(string $date)
+ * @method Idin setStatus(array $status)
+ * @method Idin setIdBatch(integer $id)
+ * @method Idin setRrp(integer $rpp)
+ * @method Idin setPage(int $page)
+ * @method Idin setFirstname(string $name)
+ * @method Idin setLastname(string $name)
+ * @method Idin setDebtornumber(string $number)
+ * @method Idin setConcerning(string $concerning)
+ * @method Idin setIdRequestClient(string $id)
+ * @method Idin setCompanyName(stirng $name)
+ * @method Idin setUsername(string $username)
+ * @method Idin setDueDate(string $date)
+ * @method Idin setReturnUrl(string $url)
+ */
 class Idin extends Endpoint implements EndpointContract
 {
     /**

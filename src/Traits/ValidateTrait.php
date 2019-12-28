@@ -5,6 +5,10 @@ namespace Noxxie\Mailtopay\Traits;
 use Noxxie\Mailtopay\Exceptions\InvalidParameterException;
 use ReflectionClass;
 
+/**
+ * @method registerCustomValidations()
+ * @method addDefaultParameterDataToParameters()
+ */
 trait ValidateTrait
 {
     /**
@@ -16,8 +20,14 @@ trait ValidateTrait
     {
         // Validate the status parameter.
         $this->validator->extend('status', function ($attribute, $value) {
-            foreach ($value as $status) {
-                if (!in_array($status, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
+            if (is_array($value)) {
+                foreach ($value as $status) {
+                    if (!in_array($status, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
+                        return false;
+                    }
+                } 
+            } else {
+                if (!in_array($value, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
                     return false;
                 }
             }
@@ -154,6 +164,7 @@ trait ValidateTrait
             $rules = array_merge(...array_values($rules));
         }
 
+        // Add the defeault parameters to the request when any is set.
         $parameters = $this->addDefaultParameterDataToParameters();
 
         $validation = $this->validator->make(
@@ -161,6 +172,7 @@ trait ValidateTrait
             $rules
         );
 
+        // When the validation fails when checking all at once throw the exception and add the error bag from the validation.
         if ($validation->fails()) {
             throw new InvalidParameterException(
                 'Validation failed for the endpoint request.',

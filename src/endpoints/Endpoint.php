@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
-use Noxxie\Mailtopay\Contracts\Endpoint as ContractEndpoint;
 use Noxxie\Mailtopay\Exceptions\InvalidMethodException;
 use Noxxie\Mailtopay\Traits\DefaultValuesTrait;
 use Noxxie\Mailtopay\Traits\ValidateTrait;
@@ -23,9 +22,9 @@ class Endpoint
     /**
      * Specifies the method we need to use to call the API.
      *
-     * @var string|null
+     * @var string
      */
-    protected $method = null;
+    protected $method;
 
     /**
      * Specifies the allowed HTTP methods that can be used.
@@ -84,7 +83,7 @@ class Endpoint
      *
      * @return \Noxxie\Mailtopay\Endpoints\Endpoint
      */
-    public function setMethod(string $method) : ContractEndpoint
+    public function setMethod(string $method) : Endpoint
     {
         if (!in_array(strtolower($method), $this->allowedMethods)) {
             throw new InvalidMethodException(sprintf(

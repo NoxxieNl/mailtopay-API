@@ -4,6 +4,11 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
+/**
+ * @method Sms setMobilenumber(string $number)
+ * @method Sms setSmsMessage(string $message)
+ * @method Sms setSmsDatatime(string $datetime)
+ */
 class Sms extends Endpoint implements EndpointContract
 {
     /**

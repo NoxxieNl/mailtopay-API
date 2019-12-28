@@ -4,6 +4,11 @@ namespace Noxxie\Mailtopay\Endpoints;
 
 use Noxxie\Mailtopay\Contracts\Endpoint as EndpointContract;
 
+/**
+ * @method Templates setMessageType(string $type)
+ * @method Templates setRpp(int $rpp)
+ * @method Templates setPage(int $page)
+ */
 class Templates extends Endpoint implements EndpointContract
 {
     /**
