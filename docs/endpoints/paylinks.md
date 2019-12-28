@@ -39,6 +39,9 @@ $paylink->setMpid()
 The `post` method is used to create a new paylink. The post endpoints can have allot of parameters were some are required to set and some are optional. In order to not have to set every parameter that is optional but must be present you can use the helper method:
 
 ````php
+use Noxxie\Mailtopay\Endpoints\Endpoint;
+use Noxxie\Mailtopay\Helpers\DefaultParameters;
+
 Endpoint::registerDefaultValues('post',  DefaultParameters::postPaylinks());
 ````
 
@@ -59,7 +62,8 @@ $pay->setMethod('post')
 		'invoice_date'  =>  '2019-10-12',
 		'invoice_amount'  =>  '12344',
 		'invoice_description'  =>  'test'
-	]]);
+    ]])
+    ->setReturnUrl('http://example.com/');
 ````
 
 **Beware** when you use the `setInvoices` option and you only use one invoice a multidimensional array must be used in order to make it work. (array in array :-)).
@@ -88,7 +92,7 @@ The status of the paylink determines what is filled and what is not filled. A ge
 
 ### Post
 
-Available methods for an `post` reponse are:
+Available methods for an `post` response are:
 ````php
 $result->getMpid();
 $result->getPaylink();
@@ -115,12 +119,14 @@ $pay->setMethod('post')
 		'invoice_date'  =>  '2019-10-31',
 		'invoice_amount'  =>  '1234',
 		'invoice_description'  =>  'test'
-	]]);
+    ]])
+    ->setReturnUrl('http://example.com/');
 
 $client = new Client('id', 'passphrase', 'base_uri', $pay);
 $response = $client->execute();
 
-// Fetch the paylink url.
+// Fetch the paylink url because of the way the response instance works, you can fetch the first result with using the direct function.
+// you also could use $response->getResults(); and loop over the results, because of this API endpoint, only one result will be returned.
 $response->getPaylink();
 ````
 
@@ -133,7 +139,7 @@ use Noxxie\Mailtopay\Client;
 $paylink = new Paylinks;
 $paylink->setMethod('get')
 	->setStatusDate('2019-10-31')
-	->setStatus('900');
+	->setStatus(['900']);
 
 $client = new Client('id', 'passphrase', 'base_uri', $pay);
 $response = $client->execute();
