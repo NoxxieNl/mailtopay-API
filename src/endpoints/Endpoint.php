@@ -83,7 +83,7 @@ class Endpoint
      *
      * @return \Noxxie\Mailtopay\Endpoints\Endpoint
      */
-    public function setMethod(string $method) : Endpoint
+    public function setMethod(string $method) : self
     {
         if (!in_array(strtolower($method), $this->allowedMethods)) {
             throw new InvalidMethodException(sprintf(
