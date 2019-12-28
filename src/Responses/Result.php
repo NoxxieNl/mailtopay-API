@@ -6,6 +6,64 @@ use BadMethodCallException;
 use DOMElement;
 use ReflectionClass;
 
+/**
+ * @method int getIdSms()
+ * @method int getIdTemplate()
+ * @method string getDescription()
+ * @method string getMessageType()
+ * @method int getMpid()
+ * @method string getIdRequestclient()
+ * @method string getStatusCode()
+ * @method string getStatusDate()
+ * @method string getProvider()
+ * @method string getAccountOwner()
+ * @method string getIban()
+ * @method string getBic()
+ * @method string getMpid()
+ * @method string getPaylink()
+ * @method string getTerm()
+ * @method string getUpdated()
+ * @method string getExpired()
+ * @method string getGender()
+ * @method string getLegalLastName()
+ * @method string getPreferredLastName()
+ * @method string getPartnerLastName()
+ * @method string getLegalLastNamePrefix()
+ * @method string getPreferredLastnamePrefix()
+ * @method string getPartnerLastnamePrefix()
+ * @method string getInitials()
+ * @method string getBirthdate()
+ * @method string getEighteenOrOlder()
+ * @method string getAddressStreet()
+ * @method string getAddressNumber()
+ * @method string getAddressNumberAddition()
+ * @method string getAddressExtra()
+ * @method string getAddressPostcode()
+ * @method string getAddressCity()
+ * @method string getAddressIntLine1()
+ * @method string getAddressIntLine2()
+ * @method string getAddressIntLine3()
+ * @method string getAddressintLine4()
+ * @method string getAddressCountry()
+ * @method string getTelephone()
+ * @method string getEmailaddress()
+ * @method string getIdinlink()
+ * @method id getIdFlow()
+ * @method string getNameFlow()
+ * @method string getSteps()
+ * @method string getActionNumber()
+ * @method string getActionDay()
+ * @method string getActionType()
+ * @method string getCid()
+ * @method string getDateStart()
+ * @method string getDateAction()
+ * @method string getDateStatus()
+ * @method string getFlowId()
+ * @method string getActionType()
+ * @method string getSettings()
+ * @method string getAmount()
+ * @method string getlabel()
+ */
 class Result
 {
     /**
@@ -82,6 +140,6 @@ class Result
             $value = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1'.'_', $value));
         }
 
-        return $value;
+        return (string) $value;
     }
 }

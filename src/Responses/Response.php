@@ -8,6 +8,9 @@ use Noxxie\Mailtopay\Contracts\Metadata as MetadataContract;
 use Noxxie\Mailtopay\Contracts\Response as ResponseContract;
 use ReflectionClass;
 
+/**
+ * @method Response getIdSms()
+ */
 class Response implements ResponseContract
 {
     /**
