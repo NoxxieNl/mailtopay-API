@@ -25,7 +25,7 @@ trait ValidateTrait
                     if (!in_array($status, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
                         return false;
                     }
-                } 
+                }
             } else {
                 if (!in_array($value, [101, 300, 500, 700, 701, 702, 703, 704, 900, 902, 998, 999])) {
                     return false;

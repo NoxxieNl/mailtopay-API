@@ -47,7 +47,6 @@ trait DefaultValuesTrait
             return $this->parameters;
         }
 
-
         $parameters = $this->parameters;
         foreach (self::$defaultValues[$this->method] as $defaultParameterName) {
 
